@@ -541,6 +541,11 @@
 <header>
   <h1>홈페이지 제작 체크리스트</h1>
   <p>아래 항목을 채워주시면 멋진 홈페이지를 만들어 드립니다!</p>
+  <p style="margin-top:14px; font-size:14px; font-weight:600; background:rgba(255,255,255,0.22); padding:14px 18px; border-radius:12px; display:inline-block; line-height:1.7; max-width:680px;">
+    🏠 <b>홈페이지는 온라인 인테리어입니다.</b><br>
+    모든 고객이 이 홈페이지를 보고 반응하고 확보될 수 있게 만들어야 합니다.<br>
+    <span style="font-weight:400; font-size:13px; opacity:0.92;">우리 사업의 <b>장점</b>과 대표님의 <b>사업계획</b>을 알려주시면, 그에 맞게 반영해드립니다.</span>
+  </p>
   <p style="margin-top:12px; font-size:13px; font-weight:500; background:rgba(255,255,255,0.18); padding:10px 16px; border-radius:10px; display:inline-block;">💡 왠만하면 <b>PC</b>로 작성해주시고, <b>정말 상세하게</b> 작성해야 이쁜 사이트가 나옵니다!</p>
   <p style="margin-top:10px;"><a href="https://찬스컴퍼니.kr/templates" target="_blank" rel="noopener" style="display:inline-block; background:white; color:#2563eb; padding:10px 22px; border-radius:10px; text-decoration:none; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">🎨 예시 템플릿 먼저 보기</a></p>
   <p style="margin-top:8px; font-size:12.5px; opacity:0.92; line-height:1.6;">맘에 드는 템플릿 선택 후, <b>선택한 스타일로 상담 신청</b>해주시면<br>봇이 알아서 작업합니다!! 🤖</p>
@@ -603,6 +608,8 @@
           <div class="check-item"><input type="radio" name="biz_type" id="biz10" value="자동차/정비" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz10">자동차/정비</label></div>
           <div class="check-item"><input type="radio" name="biz_type" id="biz11" value="반려동물" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz11">반려동물</label></div>
           <div class="check-item"><input type="radio" name="biz_type" id="biz12" value="공방/스튜디오" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz12">공방/스튜디오</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz14" value="보험설계사" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz14">보험설계사</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz15" value="전문직 PR" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz15">전문직 PR (변호사/회계사/의사 등)</label></div>
           <div class="check-item"><input type="radio" name="biz_type" id="biz13" value="기타" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz13">기타 서비스업</label></div>
         </div>
       </div>
@@ -990,6 +997,80 @@
     </div>
   </div>
 
+  <div class="section biz-only biz-insurance collapsed" data-section="insurance-extra">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:#eff6ff;color:#1d4ed8;">🛡️</div>
+      <h2>보험설계사 추가 정보</h2>
+      <span class="section-badge badge-optional">업종별</span>
+      <span class="section-toggle">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>소속 / 직책 <span class="hint">예: GA, 전속, 지점장 등</span></label>
+        <input type="text" name="insurance_company" placeholder="예: OO생명 전속 / OO GA 지점장 / 독립설계사" data-track>
+      </div>
+      <div class="field">
+        <label>주요 취급 보험</label>
+        <textarea name="insurance_types" rows="3" placeholder="예: 종신보험, 변액보험, 건강보험, 자동차보험, 법인보험, 상속/증여 설계" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>주요 컨설팅 분야 / 강점</label>
+        <textarea name="insurance_strength" rows="3" placeholder="예: 법인 절세 컨설팅, 종신/CEO플랜 전문, 가입 후 보장분석, 보험금 청구 도움" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>경력 / 자격 <span class="hint">MDRT, COT, 자격증 등</span></label>
+        <input type="text" name="insurance_career" placeholder="예: 보험설계사 10년차, MDRT 3년 연속, 종합자산관리사" data-track>
+      </div>
+      <div class="field">
+        <label>주요 고객층</label>
+        <input type="text" name="insurance_target" placeholder="예: 자영업자/법인 대표, 30~40대 직장인, 신혼부부" data-track>
+      </div>
+      <div class="field">
+        <label>상담 방식</label>
+        <input type="text" name="insurance_consult" placeholder="예: 무료 보장분석, 1:1 방문 상담, 비대면 화상 상담 가능" data-track>
+      </div>
+    </div>
+  </div>
+
+  <div class="section biz-only biz-prof collapsed" data-section="prof-extra">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:#f5f3ff;color:#6d28d9;">🎓</div>
+      <h2>전문직 PR 추가 정보</h2>
+      <span class="section-badge badge-optional">업종별</span>
+      <span class="section-toggle">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>직군 <span class="hint">변호사 / 회계사 / 세무사 / 노무사 / 의사 / 약사 / 한의사 등</span></label>
+        <input type="text" name="prof_job" placeholder="예: 변호사 / 한의사 / 세무사" data-track>
+      </div>
+      <div class="field">
+        <label>전문 분야 / 주력 케이스</label>
+        <textarea name="prof_field" rows="3" placeholder="예: 형사 전문, 이혼/가사, 부동산 분쟁, 기업 자문, 비만/통증, 청구 보험금 분쟁" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>주요 학력 / 경력</label>
+        <textarea name="prof_career" rows="3" placeholder="예: OO대 법대 졸, OO지방법원 부장판사 출신 12년, OO병원 전문의 8년" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>자격 / 인증 / 학회 활동</label>
+        <input type="text" name="prof_license" placeholder="예: 대한변호사협회 형사 전문등록, OO학회 정회원, 세무사회 우수회원" data-track>
+      </div>
+      <div class="field">
+        <label>대표 성과 / 수상</label>
+        <textarea name="prof_award" rows="2" placeholder="예: 대법원 무죄 판결, 베스트 닥터 선정, 언론 기고/방송 출연" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>상담료 / 비용 안내</label>
+        <input type="text" name="prof_fee" placeholder="예: 초회 상담 무료, 1시간 5만원, 사건별 견적" data-track>
+      </div>
+      <div class="field">
+        <label>PR 포인트 <span class="hint">고객이 꼭 알아야 할 차별점</span></label>
+        <textarea name="prof_pr_point" rows="3" placeholder="예: 판사 출신 경력 / 24시간 응대 / 분야 한정 집중 수임 / 후관예우 없음" data-track></textarea>
+      </div>
+    </div>
+  </div>
+
   <!-- 3. 서비스 / 상품 정보 -->
   <div class="section" data-section="menu">
     <div class="section-header" onclick="toggleSection(this)">
@@ -1076,16 +1157,29 @@
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#d1fae5;color:#059669;">✨</div>
       <h2>비즈니스 소개 / 특징</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <span class="section-badge badge-required">중요</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
+      <div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:10px; padding:14px 16px; margin-bottom:18px; font-size:13.5px; color:#065f46; line-height:1.75;">
+        💬 <b>이 부분이 홈페이지의 핵심입니다.</b><br>
+        우리 사업의 <b>장점</b>과 대표님의 <b>사업 계획·방향</b>을 알려주시면,<br>
+        그에 맞게 카피·구성·디자인이 반영됩니다. (편하게, 길게 적어주셔도 좋습니다)
+      </div>
       <div class="field">
         <label>한 줄 소개 <span class="hint">슬로건, 캐치프레이즈</span></label>
         <input type="text" name="slogan" placeholder="예: 고객의 성공이 우리의 성공입니다" data-track>
       </div>
       <div class="field">
-        <label>비즈니스 스토리 <span class="hint">창업 계기, 철학, 강점 등</span></label>
+        <label>우리 사업의 장점 <span class="hint">경쟁사 대비 차별점, 자랑하고 싶은 점</span></label>
+        <textarea name="biz_strength" rows="4" placeholder="예:&#10;- 동종업계 10년 이상 경력, 누적 고객 1,000명 이상&#10;- 1:1 전담 매니저 배정, 사후 관리까지 책임짐&#10;- 동일 지역 최저가 / 프리미엄 재료만 사용" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>대표님 사업 계획 / 방향 <span class="hint">앞으로 어떤 고객을 어떻게 모실 계획이신지</span></label>
+        <textarea name="biz_plan" rows="4" placeholder="예:&#10;- 30~40대 직장인 고객 중심으로 확장 예정&#10;- 내년에 2호점 오픈, 프랜차이즈화 목표&#10;- 온라인 상담 비중을 70%까지 늘릴 계획&#10;- VIP 멤버십 도입해 단골 관리 강화" data-track></textarea>
+      </div>
+      <div class="field">
+        <label>비즈니스 스토리 <span class="hint">창업 계기, 철학, 가치관</span></label>
         <textarea name="story" rows="4" placeholder="예: 10년간 쌓아온 경험을 바탕으로..." data-track></textarea>
       </div>
       <div class="field">
@@ -1499,7 +1593,9 @@
       '헬스/스포츠': '.biz-fitness',
       '자동차/정비': '.biz-auto',
       '반려동물': '.biz-pet',
-      '공방/스튜디오': '.biz-studio'
+      '공방/스튜디오': '.biz-studio',
+      '보험설계사': '.biz-insurance',
+      '전문직 PR': '.biz-prof'
     };
     const selector = mapping[type];
     if (selector) {
