@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>홈페이지 제작 체크리스트</title>
+<title data-i18n="page_title">홈페이지 제작 체크리스트</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
 
@@ -21,6 +21,49 @@
     margin: 0 auto;
     padding: 24px 20px 60px;
   }
+
+  /* 언어 전환 바 */
+  .lang-bar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  .lang-btn {
+    padding: 6px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 999px;
+    background: #fff;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1;
+  }
+
+  .lang-btn:hover { border-color: #a5b4fc; }
+
+  .lang-btn.active {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  /* 로케일별 표시/숨김 */
+  .intl-only { display: none; }
+  html.intl .ko-only { display: none !important; }
+  html.intl .intl-only { display: block; }
+  html.intl .check-item.intl-only { display: inline-block; }
 
   header {
     text-align: center;
@@ -45,7 +88,7 @@
 
   .progress-bar {
     position: sticky;
-    top: 0;
+    top: 45px;
     z-index: 100;
     background: white;
     padding: 12px 20px;
@@ -161,6 +204,7 @@
   .field input[type="text"],
   .field input[type="tel"],
   .field input[type="url"],
+  .field input[type="email"],
   .field textarea,
   .field select {
     width: 100%;
@@ -209,32 +253,6 @@
 
   .password-toggle:hover {
     color: #2563eb;
-  }
-
-  .time-pair {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .time-pair input[type="time"] {
-    padding: 8px 10px;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: inherit;
-    background: #fafafa;
-  }
-
-  .time-pair input[type="time"]:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-  }
-
-  .time-pair .sep {
-    color: #9ca3af;
-    font-size: 13px;
   }
 
   .btn-search {
@@ -426,6 +444,8 @@
     z-index: 1000;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    max-width: 90%;
+    text-align: center;
   }
 
   .toast.show {
@@ -532,36 +552,50 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+<!-- 언어 전환 바 -->
+<div class="lang-bar" id="langBar">
+  <button type="button" class="lang-btn" data-lang="ko" onclick="setLang('ko')">한국어</button>
+  <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')">English</button>
+  <button type="button" class="lang-btn" data-lang="fil" onclick="setLang('fil')">Filipino</button>
+</div>
+
 <!-- 로딩 오버레이 -->
 <div class="loading-overlay" id="loading">
   <div class="spinner"></div>
-  <p>제출 중입니다...</p>
+  <p data-i18n="loading">제출 중입니다...</p>
 </div>
 
 <header>
-  <h1>홈페이지 제작 체크리스트</h1>
-  <p>아래 항목을 채워주시면 멋진 홈페이지를 만들어 드립니다!</p>
-  <p style="margin-top:14px; font-size:14px; font-weight:600; background:rgba(255,255,255,0.22); padding:14px 18px; border-radius:12px; display:inline-block; line-height:1.7; max-width:680px;">
+  <h1 data-i18n="hdr_title">홈페이지 제작 체크리스트</h1>
+  <p data-i18n="hdr_sub">아래 항목을 채워주시면 멋진 홈페이지를 만들어 드립니다!</p>
+  <p style="margin:14px auto 0; font-size:14px; font-weight:600; background:rgba(255,255,255,0.22); padding:14px 18px; border-radius:12px; display:block; line-height:1.7; max-width:680px;" data-i18nh="hdr_interior">
     🏠 <b>홈페이지는 온라인 인테리어입니다.</b><br>
     모든 고객이 이 홈페이지를 보고 반응하고 확보될 수 있게 만들어야 합니다.<br>
     <span style="font-weight:400; font-size:13px; opacity:0.92;">우리 사업의 <b>장점</b>과 대표님의 <b>사업계획</b>을 알려주시면, 그에 맞게 반영해드립니다.</span>
   </p>
-  <p style="margin-top:12px; font-size:13px; font-weight:500; background:rgba(255,255,255,0.18); padding:10px 16px; border-radius:10px; display:inline-block;">💡 왠만하면 <b>PC</b>로 작성해주시고, <b>정말 상세하게</b> 작성해야 이쁜 사이트가 나옵니다!</p>
-  <p style="margin-top:10px;"><a href="https://찬스컴퍼니.kr/templates" target="_blank" rel="noopener" style="display:inline-block; background:white; color:#2563eb; padding:10px 22px; border-radius:10px; text-decoration:none; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">🎨 예시 템플릿 먼저 보기</a></p>
-  <p style="margin-top:8px; font-size:12.5px; opacity:0.92; line-height:1.6;">맘에 드는 템플릿 선택 후, <b>선택한 스타일로 상담 신청</b>해주시면<br>봇이 알아서 작업합니다!! 🤖</p>
-  <p style="margin-top:10px; font-size:13px; opacity:0.8;">문의: <a href="tel:01050004950" style="color:white; text-decoration:underline;">010-5000-4950</a> · <a href="https://찬스컴퍼니.kr" target="_blank" rel="noopener" style="color:white; text-decoration:underline;">찬스컴퍼니.kr</a></p>
+  <p style="margin:12px auto 0; font-size:13px; font-weight:500; background:rgba(255,255,255,0.18); padding:10px 16px; border-radius:10px; display:block; max-width:680px;" data-i18nh="hdr_tip">💡 왠만하면 <b>PC</b>로 작성해주시고, <b>정말 상세하게</b> 작성해야 이쁜 사이트가 나옵니다!</p>
+  <p style="margin-top:10px;"><a href="https://찬스컴퍼니.kr/templates" target="_blank" rel="noopener" style="display:inline-block; background:white; color:#2563eb; padding:10px 22px; border-radius:10px; text-decoration:none; font-weight:600; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,0.1);" data-i18n="hdr_templates">🎨 예시 템플릿 먼저 보기</a></p>
+  <p style="margin-top:8px; font-size:12.5px; opacity:0.92; line-height:1.6;" data-i18nh="hdr_templates_sub">맘에 드는 템플릿 선택 후, <b>선택한 스타일로 상담 신청</b>해주시면<br>봇이 알아서 작업합니다!! 🤖</p>
+  <p class="ko-only" style="margin-top:10px; font-size:13px; opacity:0.8;">문의: <a href="tel:01050004950" style="color:white; text-decoration:underline;">010-5000-4950</a> · <a href="https://찬스컴퍼니.kr" target="_blank" rel="noopener" style="color:white; text-decoration:underline;">찬스컴퍼니.kr</a></p>
+  <p class="intl-only" style="margin-top:10px; font-size:13px; opacity:0.85;" data-i18nh="hdr_contact_intl">Inquiries: <a href="mailto:k50004950@gmail.com" style="color:white; text-decoration:underline;">k50004950@gmail.com</a></p>
 </header>
 
 <!-- 제출 완료 화면 -->
 <div class="success-screen" id="successScreen">
   <div class="success-icon">✓</div>
-  <h2>제출이 완료되었습니다!</h2>
-  <p>
+  <h2 data-i18n="success_title">제출이 완료되었습니다!</h2>
+  <p class="ko-only">
     소중한 정보 감사합니다.<br>
     확인 후 빠르게 연락드리겠습니다.<br>
     첨부하신 사진까지 모두 잘 전달되었습니다.<br><br>
     문의사항이 있으시면 아래로 연락해주세요.<br>
     <a href="tel:01050004950" style="font-size:18px; font-weight:700; color:#2563eb;">010-5000-4950</a>
+  </p>
+  <p class="intl-only" data-i18nh="success_body_intl">
+    Thank you for your information.<br>
+    We will review it and get back to you shortly.<br><br>
+    For any questions, please contact us at:<br>
+    <a href="mailto:k50004950@gmail.com" style="font-size:18px; font-weight:700; color:#2563eb;">k50004950@gmail.com</a>
   </p>
 </div>
 
@@ -578,100 +612,100 @@
   <div class="section" data-section="basic">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#eff6ff;color:#2563eb;">🏪</div>
-      <h2>기본 사업 정보</h2>
-      <span class="section-badge badge-required">필수</span>
+      <h2 data-i18n="s_basic">기본 사업 정보</h2>
+      <span class="section-badge badge-required" data-i18n="badge_required">필수</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="inline-fields">
         <div class="field">
-          <label>상호명 (한글) *</label>
-          <input type="text" name="biz_name_kr" placeholder="예: OO식당, OO피부과, OO학원" data-track required>
+          <label><span data-i18n="f_bizname_local">상호명 (한글)</span> *</label>
+          <input type="text" name="biz_name_kr" data-ph="ph_bizname_local" placeholder="예: OO식당, OO피부과, OO학원" data-track required>
         </div>
         <div class="field">
-          <label>상호명 (영문) <span class="hint">없으면 비워두세요</span></label>
-          <input type="text" name="biz_name_en" placeholder="예: My Business" data-track>
+          <label><span data-i18n="f_bizname_en">상호명 (영문)</span> <span class="hint" data-i18n="hint_optional_blank">없으면 비워두세요</span></label>
+          <input type="text" name="biz_name_en" data-ph="ph_bizname_en" placeholder="예: My Business" data-track>
         </div>
       </div>
       <div class="field">
-        <label>업종 대분류 *</label>
+        <label><span data-i18n="f_biztype">업종 대분류</span> *</label>
         <div class="check-group">
-          <div class="check-item"><input type="radio" name="biz_type" id="biz1" value="음식점/카페" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz1">음식점/카페</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz2" value="병원/뷰티" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz2">병원/뷰티/미용</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz3" value="학원/교육" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz3">학원/교육</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz4" value="세무/법무/컨설팅" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz4">세무/법무/컨설팅</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz5" value="제조/도소매" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz5">제조/도소매</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz6" value="IT/디자인" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz6">IT/디자인/웹</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz7" value="부동산/건설/인테리어" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz7">부동산/건설/인테리어</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz8" value="숙박/펜션" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz8">숙박/펜션/여행</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz9" value="헬스/스포츠" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz9">헬스/스포츠</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz10" value="자동차/정비" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz10">자동차/정비</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz11" value="반려동물" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz11">반려동물</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz12" value="공방/스튜디오" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz12">공방/스튜디오</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz14" value="보험설계사" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz14">보험설계사</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz15" value="전문직 PR" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz15">전문직 PR (변호사/회계사/의사 등)</label></div>
-          <div class="check-item"><input type="radio" name="biz_type" id="biz13" value="기타" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz13">기타 서비스업</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz1" value="음식점/카페" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz1" data-i18n="bt_food">음식점/카페</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz2" value="병원/뷰티" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz2" data-i18n="bt_beauty">병원/뷰티/미용</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz3" value="학원/교육" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz3" data-i18n="bt_edu">학원/교육</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz4" value="세무/법무/컨설팅" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz4" data-i18n="bt_consulting">세무/법무/컨설팅</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz5" value="제조/도소매" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz5" data-i18n="bt_retail">제조/도소매</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz6" value="IT/디자인" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz6" data-i18n="bt_it">IT/디자인/웹</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz7" value="부동산/건설/인테리어" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz7" data-i18n="bt_realestate">부동산/건설/인테리어</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz8" value="숙박/펜션" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz8" data-i18n="bt_accommodation">숙박/펜션/여행</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz9" value="헬스/스포츠" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz9" data-i18n="bt_fitness">헬스/스포츠</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz10" value="자동차/정비" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz10" data-i18n="bt_auto">자동차/정비</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz11" value="반려동물" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz11" data-i18n="bt_pet">반려동물</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz12" value="공방/스튜디오" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz12" data-i18n="bt_studio">공방/스튜디오</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz14" value="보험설계사" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz14" data-i18n="bt_insurance">보험설계사</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz15" value="전문직 PR" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz15" data-i18n="bt_prof">전문직 PR (변호사/회계사/의사 등)</label></div>
+          <div class="check-item"><input type="radio" name="biz_type" id="biz13" value="기타" style="display:none" data-track onchange="handleBizTypeChange()"><label for="biz13" data-i18n="bt_etc">기타 서비스업</label></div>
         </div>
       </div>
       <div class="field">
-        <label>세부 업종</label>
-        <input type="text" name="biz_subtype" placeholder="예: 한식, 피부관리실, 영어학원, 세무사사무실, 웹에이전시, 인테리어시공, 펜션, 필라테스" data-track>
+        <label data-i18n="f_subtype">세부 업종</label>
+        <input type="text" name="biz_subtype" data-ph="ph_subtype" placeholder="예: 한식, 피부관리실, 영어학원, 세무사사무실, 웹에이전시, 인테리어시공, 펜션, 필라테스" data-track>
       </div>
       <div class="inline-fields">
         <div class="field">
-          <label>사업자등록번호</label>
-          <input type="text" name="biz_number" placeholder="예: 123-45-67890" data-track>
+          <label data-i18n="f_biznumber">사업자등록번호</label>
+          <input type="text" name="biz_number" data-ph="ph_biznumber" placeholder="예: 123-45-67890" data-track>
         </div>
         <div class="field">
-          <label>대표자명</label>
-          <input type="text" name="ceo_name" placeholder="예: 홍길동" data-track>
+          <label data-i18n="f_ceo">대표자명</label>
+          <input type="text" name="ceo_name" data-ph="ph_ceo" placeholder="예: 홍길동" data-track>
         </div>
       </div>
       <div class="field">
-        <label>사업장 주소 *</label>
+        <label><span data-i18n="f_address">사업장 주소</span> *</label>
         <div class="address-row">
-          <input type="text" name="address" id="addressMain" placeholder="주소 검색 버튼을 눌러주세요" data-track required readonly>
-          <button type="button" class="btn-search" onclick="searchAddress()">주소 검색</button>
+          <input type="text" name="address" id="addressMain" data-ph="ph_address" placeholder="주소 검색 버튼을 눌러주세요" data-track required readonly>
+          <button type="button" class="btn-search ko-only" onclick="searchAddress()" data-i18n="btn_address_search">주소 검색</button>
         </div>
-        <input type="text" name="address_detail" placeholder="상세 주소 (예: 1층, 201호)" data-track>
+        <input type="text" name="address_detail" data-ph="ph_address_detail" placeholder="상세 주소 (예: 1층, 201호)" data-track>
       </div>
       <div class="inline-fields">
         <div class="field">
-          <label>대표 전화번호 *</label>
-          <input type="tel" name="phone" placeholder="02-1234-5678" data-track required>
+          <label><span data-i18n="f_phone">대표 전화번호</span> *</label>
+          <input type="tel" name="phone" data-ph="ph_phone" placeholder="02-1234-5678" data-track required>
         </div>
         <div class="field">
-          <label>휴대폰 번호 <span class="hint">비공개, 연락용</span></label>
-          <input type="tel" name="mobile" placeholder="010-0000-0000" data-track>
+          <label><span data-i18n="f_mobile">휴대폰 번호</span> <span class="hint" data-i18n="hint_mobile">비공개, 연락용</span></label>
+          <input type="tel" name="mobile" data-ph="ph_mobile" placeholder="010-0000-0000" data-track>
         </div>
       </div>
       <div class="field">
-        <label>영업시간 *</label>
+        <label><span data-i18n="f_hours">영업시간</span> *</label>
         <div class="time-row">
-          <span>평일</span>
+          <span data-i18n="t_weekday">평일</span>
           <input type="text" name="hour_weekday" placeholder="11:00 ~ 22:00" data-track>
         </div>
         <div class="time-row">
-          <span>주말</span>
+          <span data-i18n="t_weekend">주말</span>
           <input type="text" name="hour_weekend" placeholder="11:00 ~ 23:00" data-track>
         </div>
         <div class="time-row">
-          <span>브레이크타임</span>
-          <input type="text" name="hour_break" placeholder="15:00 ~ 17:00 (없으면 비워두세요)" data-track>
+          <span data-i18n="t_break">브레이크타임</span>
+          <input type="text" name="hour_break" data-ph="ph_break" placeholder="15:00 ~ 17:00 (없으면 비워두세요)" data-track>
         </div>
         <div class="time-row">
-          <span>라스트오더/마감</span>
-          <input type="text" name="hour_last" placeholder="21:00 (해당시에만)" data-track>
+          <span data-i18n="t_last">라스트오더/마감</span>
+          <input type="text" name="hour_last" data-ph="ph_last" placeholder="21:00 (해당시에만)" data-track>
         </div>
       </div>
       <div class="inline-fields">
         <div class="field">
-          <label>정기 휴무일</label>
-          <input type="text" name="closed_day" placeholder="예: 매주 월요일" data-track>
+          <label data-i18n="f_closed">정기 휴무일</label>
+          <input type="text" name="closed_day" data-ph="ph_closed" placeholder="예: 매주 월요일" data-track>
         </div>
         <div class="field">
-          <label>주차 안내</label>
-          <input type="text" name="parking" placeholder="예: 건물 지하 2시간 무료" data-track>
+          <label data-i18n="f_parking">주차 안내</label>
+          <input type="text" name="parking" data-ph="ph_parking" placeholder="예: 건물 지하 2시간 무료" data-track>
         </div>
       </div>
     </div>
@@ -681,24 +715,24 @@
   <div class="section" data-section="admin">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef2f2;color:#dc2626;">🔐</div>
-      <h2>관리자 계정 정보</h2>
-      <span class="section-badge badge-required">필수</span>
+      <h2 data-i18n="s_admin">관리자 계정 정보</h2>
+      <span class="section-badge badge-required" data-i18n="badge_required">필수</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
-      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">
+      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;" data-i18nh="admin_desc">
         홈페이지에 사진 업로드 등 직접 관리하실 수 있는 관리자 페이지를 만들어 드립니다.<br>
         로그인에 사용할 <b>구글 계정</b> 정보를 입력해주세요.
       </p>
       <div class="field">
-        <label>구글 이메일 (Gmail) *</label>
-        <input type="text" name="admin_email" placeholder="예: myshop@gmail.com" data-track required>
+        <label><span data-i18n="f_admin_email">구글 이메일 (Gmail)</span> *</label>
+        <input type="text" name="admin_email" data-ph="ph_admin_email" placeholder="예: myshop@gmail.com" autocomplete="off" data-track required>
       </div>
       <div class="field">
-        <label>관리자 비밀번호 * <span class="hint">홈페이지 관리용 비밀번호를 정해주세요 (8자 이상)</span></label>
+        <label><span data-i18n="f_admin_pw">관리자 비밀번호</span> * <span class="hint" data-i18n="hint_admin_pw">홈페이지 관리용 비밀번호를 정해주세요 (8자 이상)</span></label>
         <div class="password-wrap">
-          <input type="password" name="admin_password" id="adminPassword" placeholder="영문+숫자 조합 8자 이상" data-track required>
-          <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="비밀번호 보기">👁</button>
+          <input type="password" name="admin_password" id="adminPassword" data-ph="ph_admin_pw" placeholder="영문+숫자 조합 8자 이상" autocomplete="new-password" data-track required>
+          <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="show password">👁</button>
         </div>
       </div>
     </div>
@@ -708,16 +742,17 @@
   <div class="section" data-section="sns">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef3c7;color:#d97706;">📱</div>
-      <h2>SNS 및 외부 링크</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_sns">SNS 및 외부 링크</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>인스타그램</label>
+        <label data-i18n="f_instagram">인스타그램</label>
         <input type="url" name="instagram" placeholder="https://instagram.com/your_id" data-track>
       </div>
-      <div class="field">
+      <!-- 한국 전용: 네이버/카카오 -->
+      <div class="field ko-only">
         <label>네이버 플레이스 링크 <span class="hint">아래 방법으로 찾을 수 있어요</span></label>
         <div style="background:#E8F5E9; border:1px solid #A5D6A7; border-radius:10px; padding:14px 16px; margin-bottom:10px; font-size:13px; color:#555; line-height:1.8;">
           <b style="color:#374151;">네이버 플레이스 링크 찾는 법</b><br>
@@ -727,7 +762,7 @@
         </div>
         <input type="url" name="naver_place" placeholder="https://naver.me/..." data-track>
       </div>
-      <div class="field">
+      <div class="field ko-only">
         <label>카카오맵 링크 <span class="hint">아래 방법으로 찾을 수 있어요</span></label>
         <div style="background:#FFF9E6; border:1px solid #F0E0A0; border-radius:10px; padding:14px 16px; margin-bottom:10px; font-size:13px; color:#555; line-height:1.8;">
           <b style="color:#374151;">카카오맵 링크 찾는 법</b><br>
@@ -738,17 +773,26 @@
         </div>
         <input type="url" name="kakao_map" placeholder="https://place.map.kakao.com/..." data-track>
       </div>
-      <div class="field">
-        <label>카카오톡 채널 / 네이버 톡톡</label>
-        <input type="url" name="chat_link" placeholder="채팅 상담 링크" data-track>
+      <!-- 해외 전용: 구글맵/페이스북 -->
+      <div class="field intl-only">
+        <label data-i18n="f_google_map">Google Maps link <span class="hint" data-i18n="hint_google_map">Search your business on Google Maps → Share → Copy link</span></label>
+        <input type="url" name="google_map" placeholder="https://maps.app.goo.gl/..." data-track>
+      </div>
+      <div class="field intl-only">
+        <label data-i18n="f_facebook">Facebook Page</label>
+        <input type="url" name="facebook_page" placeholder="https://facebook.com/yourpage" data-track>
       </div>
       <div class="field">
-        <label>플랫폼 링크 <span class="hint">배민, 쿠팡이츠, 크몽, 숨고 등</span></label>
-        <input type="url" name="delivery" placeholder="배달앱/플랫폼 매장 링크" data-track>
+        <label data-i18n="f_chat">카카오톡 채널 / 네이버 톡톡</label>
+        <input type="url" name="chat_link" data-ph="ph_chat" placeholder="채팅 상담 링크" data-track>
       </div>
       <div class="field">
-        <label>기타 SNS <span class="hint">블로그, 유튜브 등</span></label>
-        <input type="url" name="other_sns" placeholder="기타 링크" data-track>
+        <label data-i18n="f_platform">플랫폼 링크 <span class="hint" data-i18n="hint_platform">배민, 쿠팡이츠, 크몽, 숨고 등</span></label>
+        <input type="url" name="delivery" data-ph="ph_platform" placeholder="배달앱/플랫폼 매장 링크" data-track>
+      </div>
+      <div class="field">
+        <label data-i18n="f_other_sns">기타 SNS <span class="hint" data-i18n="hint_other_sns">블로그, 유튜브 등</span></label>
+        <input type="url" name="other_sns" data-ph="ph_other_sns" placeholder="기타 링크" data-track>
       </div>
     </div>
   </div>
@@ -756,14 +800,14 @@
   <div class="section biz-only biz-food" data-section="food-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fff7ed;color:#ea580c;">🍴</div>
-      <h2>음식점/카페 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_food_title">음식점/카페 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>예약/배달/포장 관련 안내</label>
-        <textarea name="food_service_info" rows="3" placeholder="예: 네이버 예약 가능 / 포장 가능 / 배달앱 운영 중" data-track></textarea>
+        <label data-i18n="x_food_info">예약/배달/포장 관련 안내</label>
+        <textarea name="food_service_info" rows="3" data-ph="ph_food_info" placeholder="예: 네이버 예약 가능 / 포장 가능 / 배달앱 운영 중" data-track></textarea>
       </div>
     </div>
   </div>
@@ -771,18 +815,18 @@
   <div class="section biz-only biz-beauty collapsed" data-section="beauty-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fdf2f8;color:#db2777;">💄</div>
-      <h2>병원/뷰티 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_beauty_title">병원/뷰티 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>주요 시술/서비스</label>
-        <textarea name="beauty_services" rows="3" placeholder="예: 피부관리, 왁싱, 속눈썹펌, 체형관리" data-track></textarea>
+        <label data-i18n="x_beauty_services">주요 시술/서비스</label>
+        <textarea name="beauty_services" rows="3" data-ph="ph_beauty_services" placeholder="예: 피부관리, 왁싱, 속눈썹펌, 체형관리" data-track></textarea>
       </div>
       <div class="field">
-        <label>대표 강점</label>
-        <input type="text" name="beauty_strength" placeholder="예: 1:1 맞춤 상담, 프리미엄 제품 사용" data-track>
+        <label data-i18n="x_beauty_strength">대표 강점</label>
+        <input type="text" name="beauty_strength" data-ph="ph_beauty_strength" placeholder="예: 1:1 맞춤 상담, 프리미엄 제품 사용" data-track>
       </div>
     </div>
   </div>
@@ -790,18 +834,18 @@
   <div class="section biz-only biz-edu collapsed" data-section="edu-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#ecfeff;color:#0891b2;">📚</div>
-      <h2>학원/교육 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_edu_title">학원/교육 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>교육 과목 / 대상</label>
-        <textarea name="edu_subjects" rows="3" placeholder="예: 초중등 영어, 수학 / 초등~중등" data-track></textarea>
+        <label data-i18n="x_edu_subjects">교육 과목 / 대상</label>
+        <textarea name="edu_subjects" rows="3" data-ph="ph_edu_subjects" placeholder="예: 초중등 영어, 수학 / 초등~중등" data-track></textarea>
       </div>
       <div class="field">
-        <label>교육 강점</label>
-        <input type="text" name="edu_strength" placeholder="예: 소수정예, 개별 맞춤 커리큘럼" data-track>
+        <label data-i18n="x_edu_strength">교육 강점</label>
+        <input type="text" name="edu_strength" data-ph="ph_edu_strength" placeholder="예: 소수정예, 개별 맞춤 커리큘럼" data-track>
       </div>
     </div>
   </div>
@@ -809,18 +853,18 @@
   <div class="section biz-only biz-consulting collapsed" data-section="consulting-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#eef2ff;color:#4f46e5;">💼</div>
-      <h2>세무/법무/컨설팅 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_consulting_title">세무/법무/컨설팅 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>제공 서비스</label>
-        <textarea name="consulting_services" rows="3" placeholder="예: 세무기장, 신고대리, 절세 컨설팅, 법인설립" data-track></textarea>
+        <label data-i18n="x_consulting_services">제공 서비스</label>
+        <textarea name="consulting_services" rows="3" data-ph="ph_consulting_services" placeholder="예: 세무기장, 신고대리, 절세 컨설팅, 법인설립" data-track></textarea>
       </div>
       <div class="field">
-        <label>핵심 강점</label>
-        <input type="text" name="consulting_strength" placeholder="예: 7년 노하우, 업종별 절세 컨설팅" data-track>
+        <label data-i18n="x_consulting_strength">핵심 강점</label>
+        <input type="text" name="consulting_strength" data-ph="ph_consulting_strength" placeholder="예: 7년 노하우, 업종별 절세 컨설팅" data-track>
       </div>
     </div>
   </div>
@@ -828,18 +872,18 @@
   <div class="section biz-only biz-retail collapsed" data-section="retail-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#f0fdf4;color:#16a34a;">🏭</div>
-      <h2>제조/도소매 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_retail_title">제조/도소매 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>주요 품목 / 서비스</label>
-        <textarea name="retail_items" rows="3" placeholder="예: 산업자재 유통, 건축자재, 생활용품 도소매" data-track></textarea>
+        <label data-i18n="x_retail_items">주요 품목 / 서비스</label>
+        <textarea name="retail_items" rows="3" data-ph="ph_retail_items" placeholder="예: 산업자재 유통, 건축자재, 생활용품 도소매" data-track></textarea>
       </div>
       <div class="field">
-        <label>거래 방식 / 주요 고객층</label>
-        <input type="text" name="retail_target" placeholder="예: B2B 납품 위주 / 소매 고객 병행" data-track>
+        <label data-i18n="x_retail_target">거래 방식 / 주요 고객층</label>
+        <input type="text" name="retail_target" data-ph="ph_retail_target" placeholder="예: B2B 납품 위주 / 소매 고객 병행" data-track>
       </div>
     </div>
   </div>
@@ -847,22 +891,22 @@
   <div class="section biz-only biz-it collapsed" data-section="it-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#e0f2fe;color:#0284c7;">💻</div>
-      <h2>IT/디자인 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_it_title">IT/디자인 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>주요 서비스</label>
-        <textarea name="it_services" rows="3" placeholder="예: 웹사이트 제작, 앱 개발, UI/UX 디자인, SEO 최적화" data-track></textarea>
+        <label data-i18n="x_it_services">주요 서비스</label>
+        <textarea name="it_services" rows="3" data-ph="ph_it_services" placeholder="예: 웹사이트 제작, 앱 개발, UI/UX 디자인, SEO 최적화" data-track></textarea>
       </div>
       <div class="field">
-        <label>기술 스택 / 사용 툴</label>
-        <input type="text" name="it_stack" placeholder="예: React, Node.js, Figma, AWS" data-track>
+        <label data-i18n="x_it_stack">기술 스택 / 사용 툴</label>
+        <input type="text" name="it_stack" data-ph="ph_it_stack" placeholder="예: React, Node.js, Figma, AWS" data-track>
       </div>
       <div class="field">
-        <label>포트폴리오 링크</label>
-        <input type="url" name="it_portfolio" placeholder="기존 포트폴리오 사이트 URL" data-track>
+        <label data-i18n="x_it_portfolio">포트폴리오 링크</label>
+        <input type="url" name="it_portfolio" data-ph="ph_it_portfolio" placeholder="기존 포트폴리오 사이트 URL" data-track>
       </div>
     </div>
   </div>
@@ -870,22 +914,22 @@
   <div class="section biz-only biz-realestate collapsed" data-section="realestate-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef3c7;color:#b45309;">🏠</div>
-      <h2>부동산/건설/인테리어 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_realestate_title">부동산/건설/인테리어 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>주요 서비스 분야</label>
-        <textarea name="realestate_services" rows="3" placeholder="예: 주거용 매매/전월세, 상가 임대, 인테리어 시공, 리모델링" data-track></textarea>
+        <label data-i18n="x_realestate_services">주요 서비스 분야</label>
+        <textarea name="realestate_services" rows="3" data-ph="ph_realestate_services" placeholder="예: 주거용 매매/전월세, 상가 임대, 인테리어 시공, 리모델링" data-track></textarea>
       </div>
       <div class="field">
-        <label>주요 활동 지역</label>
-        <input type="text" name="realestate_area" placeholder="예: 강남구, 서초구 일대" data-track>
+        <label data-i18n="x_realestate_area">주요 활동 지역</label>
+        <input type="text" name="realestate_area" data-ph="ph_realestate_area" placeholder="예: 강남구, 서초구 일대" data-track>
       </div>
       <div class="field">
-        <label>시공 사례 / 포트폴리오</label>
-        <input type="text" name="realestate_portfolio" placeholder="시공 사례 사진이나 링크" data-track>
+        <label data-i18n="x_realestate_portfolio">시공 사례 / 포트폴리오</label>
+        <input type="text" name="realestate_portfolio" data-ph="ph_realestate_portfolio" placeholder="시공 사례 사진이나 링크" data-track>
       </div>
     </div>
   </div>
@@ -893,22 +937,22 @@
   <div class="section biz-only biz-accommodation collapsed" data-section="accommodation-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fce7f3;color:#be185d;">🏨</div>
-      <h2>숙박/펜션/여행 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_acc_title">숙박/펜션/여행 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>객실 종류 및 요금</label>
-        <textarea name="room_types" rows="3" placeholder="예: 스탠다드룸 8만원~, 디럭스룸 12만원~, 패밀리룸 15만원~" data-track></textarea>
+        <label data-i18n="x_acc_rooms">객실 종류 및 요금</label>
+        <textarea name="room_types" rows="3" data-ph="ph_acc_rooms" placeholder="예: 스탠다드룸 8만원~, 디럭스룸 12만원~, 패밀리룸 15만원~" data-track></textarea>
       </div>
       <div class="field">
-        <label>부대시설</label>
-        <input type="text" name="accommodation_facilities" placeholder="예: 수영장, BBQ장, 조식 제공, 스파" data-track>
+        <label data-i18n="x_acc_facilities">부대시설</label>
+        <input type="text" name="accommodation_facilities" data-ph="ph_acc_facilities" placeholder="예: 수영장, BBQ장, 조식 제공, 스파" data-track>
       </div>
       <div class="field">
-        <label>예약 플랫폼</label>
-        <input type="text" name="booking_platform" placeholder="예: 에어비앤비, 야놀자, 여기어때, 네이버 예약" data-track>
+        <label data-i18n="x_acc_booking">예약 플랫폼</label>
+        <input type="text" name="booking_platform" data-ph="ph_acc_booking" placeholder="예: 에어비앤비, 야놀자, 여기어때, 네이버 예약" data-track>
       </div>
     </div>
   </div>
@@ -916,22 +960,22 @@
   <div class="section biz-only biz-fitness collapsed" data-section="fitness-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#dcfce7;color:#16a34a;">🏋️</div>
-      <h2>헬스/스포츠 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_fit_title">헬스/스포츠 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>프로그램 / 수업 종류</label>
-        <textarea name="fitness_programs" rows="3" placeholder="예: PT, 필라테스, 요가, 크로스핏, 수영, 골프레슨" data-track></textarea>
+        <label data-i18n="x_fit_programs">프로그램 / 수업 종류</label>
+        <textarea name="fitness_programs" rows="3" data-ph="ph_fit_programs" placeholder="예: PT, 필라테스, 요가, 크로스핏, 수영, 골프레슨" data-track></textarea>
       </div>
       <div class="field">
-        <label>이용 요금 체계</label>
-        <input type="text" name="fitness_pricing" placeholder="예: 월 회원권 10만원, PT 10회 50만원" data-track>
+        <label data-i18n="x_fit_pricing">이용 요금 체계</label>
+        <input type="text" name="fitness_pricing" data-ph="ph_fit_pricing" placeholder="예: 월 회원권 10만원, PT 10회 50만원" data-track>
       </div>
       <div class="field">
-        <label>트레이너 / 강사 정보</label>
-        <input type="text" name="fitness_trainers" placeholder="예: 생활체육지도사 자격, 경력 10년 전문 트레이너" data-track>
+        <label data-i18n="x_fit_trainers">트레이너 / 강사 정보</label>
+        <input type="text" name="fitness_trainers" data-ph="ph_fit_trainers" placeholder="예: 생활체육지도사 자격, 경력 10년 전문 트레이너" data-track>
       </div>
     </div>
   </div>
@@ -939,18 +983,18 @@
   <div class="section biz-only biz-auto collapsed" data-section="auto-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef9c3;color:#a16207;">🚗</div>
-      <h2>자동차/정비 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_auto_title">자동차/정비 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>주요 서비스</label>
-        <textarea name="auto_services" rows="3" placeholder="예: 엔진오일 교환, 타이어 교체, 외형복원, 광택/코팅, 수입차 전문 정비" data-track></textarea>
+        <label data-i18n="x_auto_services">주요 서비스</label>
+        <textarea name="auto_services" rows="3" data-ph="ph_auto_services" placeholder="예: 엔진오일 교환, 타이어 교체, 외형복원, 광택/코팅, 수입차 전문 정비" data-track></textarea>
       </div>
       <div class="field">
-        <label>취급 브랜드 / 차종</label>
-        <input type="text" name="auto_brands" placeholder="예: 전차종 / 수입차 전문 / BMW, 벤츠 전문" data-track>
+        <label data-i18n="x_auto_brands">취급 브랜드 / 차종</label>
+        <input type="text" name="auto_brands" data-ph="ph_auto_brands" placeholder="예: 전차종 / 수입차 전문 / BMW, 벤츠 전문" data-track>
       </div>
     </div>
   </div>
@@ -958,18 +1002,18 @@
   <div class="section biz-only biz-pet collapsed" data-section="pet-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fff1f2;color:#e11d48;">🐾</div>
-      <h2>반려동물 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_pet_title">반려동물 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>주요 서비스</label>
-        <textarea name="pet_services" rows="3" placeholder="예: 미용, 호텔링, 유치원, 동물병원, 애견용품 판매" data-track></textarea>
+        <label data-i18n="x_pet_services">주요 서비스</label>
+        <textarea name="pet_services" rows="3" data-ph="ph_pet_services" placeholder="예: 미용, 호텔링, 유치원, 동물병원, 애견용품 판매" data-track></textarea>
       </div>
       <div class="field">
-        <label>취급 동물</label>
-        <input type="text" name="pet_types" placeholder="예: 강아지/고양이 / 소동물 포함" data-track>
+        <label data-i18n="x_pet_types">취급 동물</label>
+        <input type="text" name="pet_types" data-ph="ph_pet_types" placeholder="예: 강아지/고양이 / 소동물 포함" data-track>
       </div>
     </div>
   </div>
@@ -977,22 +1021,22 @@
   <div class="section biz-only biz-studio collapsed" data-section="studio-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#faf5ff;color:#7c3aed;">🎨</div>
-      <h2>공방/스튜디오 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_studio_title">공방/스튜디오 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>운영 프로그램 / 클래스</label>
-        <textarea name="studio_programs" rows="3" placeholder="예: 도자기 원데이클래스, 가죽공예, 플라워클래스, 사진 촬영" data-track></textarea>
+        <label data-i18n="x_studio_programs">운영 프로그램 / 클래스</label>
+        <textarea name="studio_programs" rows="3" data-ph="ph_studio_programs" placeholder="예: 도자기 원데이클래스, 가죽공예, 플라워클래스, 사진 촬영" data-track></textarea>
       </div>
       <div class="field">
-        <label>수강 인원 / 소요 시간</label>
-        <input type="text" name="studio_capacity" placeholder="예: 최대 8명, 2시간 소요" data-track>
+        <label data-i18n="x_studio_capacity">수강 인원 / 소요 시간</label>
+        <input type="text" name="studio_capacity" data-ph="ph_studio_capacity" placeholder="예: 최대 8명, 2시간 소요" data-track>
       </div>
       <div class="field">
-        <label>수강료</label>
-        <input type="text" name="studio_pricing" placeholder="예: 원데이 5만원, 정규반 월 20만원" data-track>
+        <label data-i18n="x_studio_pricing">수강료</label>
+        <input type="text" name="studio_pricing" data-ph="ph_studio_pricing" placeholder="예: 원데이 5만원, 정규반 월 20만원" data-track>
       </div>
     </div>
   </div>
@@ -1000,34 +1044,34 @@
   <div class="section biz-only biz-insurance collapsed" data-section="insurance-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#eff6ff;color:#1d4ed8;">🛡️</div>
-      <h2>보험설계사 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_ins_title">보험설계사 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>소속 / 직책 <span class="hint">예: GA, 전속, 지점장 등</span></label>
-        <input type="text" name="insurance_company" placeholder="예: OO생명 전속 / OO GA 지점장 / 독립설계사" data-track>
+        <label data-i18n="x_ins_company">소속 / 직책 <span class="hint" data-i18n="hint_ins_company">예: GA, 전속, 지점장 등</span></label>
+        <input type="text" name="insurance_company" data-ph="ph_ins_company" placeholder="예: OO생명 전속 / OO GA 지점장 / 독립설계사" data-track>
       </div>
       <div class="field">
-        <label>주요 취급 보험</label>
-        <textarea name="insurance_types" rows="3" placeholder="예: 종신보험, 변액보험, 건강보험, 자동차보험, 법인보험, 상속/증여 설계" data-track></textarea>
+        <label data-i18n="x_ins_types">주요 취급 보험</label>
+        <textarea name="insurance_types" rows="3" data-ph="ph_ins_types" placeholder="예: 종신보험, 변액보험, 건강보험, 자동차보험, 법인보험, 상속/증여 설계" data-track></textarea>
       </div>
       <div class="field">
-        <label>주요 컨설팅 분야 / 강점</label>
-        <textarea name="insurance_strength" rows="3" placeholder="예: 법인 절세 컨설팅, 종신/CEO플랜 전문, 가입 후 보장분석, 보험금 청구 도움" data-track></textarea>
+        <label data-i18n="x_ins_strength">주요 컨설팅 분야 / 강점</label>
+        <textarea name="insurance_strength" rows="3" data-ph="ph_ins_strength" placeholder="예: 법인 절세 컨설팅, 종신/CEO플랜 전문, 가입 후 보장분석, 보험금 청구 도움" data-track></textarea>
       </div>
       <div class="field">
-        <label>경력 / 자격 <span class="hint">MDRT, COT, 자격증 등</span></label>
-        <input type="text" name="insurance_career" placeholder="예: 보험설계사 10년차, MDRT 3년 연속, 종합자산관리사" data-track>
+        <label data-i18n="x_ins_career">경력 / 자격 <span class="hint" data-i18n="hint_ins_career">MDRT, COT, 자격증 등</span></label>
+        <input type="text" name="insurance_career" data-ph="ph_ins_career" placeholder="예: 보험설계사 10년차, MDRT 3년 연속, 종합자산관리사" data-track>
       </div>
       <div class="field">
-        <label>주요 고객층</label>
-        <input type="text" name="insurance_target" placeholder="예: 자영업자/법인 대표, 30~40대 직장인, 신혼부부" data-track>
+        <label data-i18n="x_ins_target">주요 고객층</label>
+        <input type="text" name="insurance_target" data-ph="ph_ins_target" placeholder="예: 자영업자/법인 대표, 30~40대 직장인, 신혼부부" data-track>
       </div>
       <div class="field">
-        <label>상담 방식</label>
-        <input type="text" name="insurance_consult" placeholder="예: 무료 보장분석, 1:1 방문 상담, 비대면 화상 상담 가능" data-track>
+        <label data-i18n="x_ins_consult">상담 방식</label>
+        <input type="text" name="insurance_consult" data-ph="ph_ins_consult" placeholder="예: 무료 보장분석, 1:1 방문 상담, 비대면 화상 상담 가능" data-track>
       </div>
     </div>
   </div>
@@ -1035,38 +1079,38 @@
   <div class="section biz-only biz-prof collapsed" data-section="prof-extra">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#f5f3ff;color:#6d28d9;">🎓</div>
-      <h2>전문직 PR 추가 정보</h2>
-      <span class="section-badge badge-optional">업종별</span>
+      <h2 data-i18n="x_prof_title">전문직 PR 추가 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_bytype">업종별</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>직군 <span class="hint">변호사 / 회계사 / 세무사 / 노무사 / 의사 / 약사 / 한의사 등</span></label>
-        <input type="text" name="prof_job" placeholder="예: 변호사 / 한의사 / 세무사" data-track>
+        <label data-i18n="x_prof_job">직군 <span class="hint" data-i18n="hint_prof_job">변호사 / 회계사 / 세무사 / 노무사 / 의사 / 약사 / 한의사 등</span></label>
+        <input type="text" name="prof_job" data-ph="ph_prof_job" placeholder="예: 변호사 / 한의사 / 세무사" data-track>
       </div>
       <div class="field">
-        <label>전문 분야 / 주력 케이스</label>
-        <textarea name="prof_field" rows="3" placeholder="예: 형사 전문, 이혼/가사, 부동산 분쟁, 기업 자문, 비만/통증, 청구 보험금 분쟁" data-track></textarea>
+        <label data-i18n="x_prof_field">전문 분야 / 주력 케이스</label>
+        <textarea name="prof_field" rows="3" data-ph="ph_prof_field" placeholder="예: 형사 전문, 이혼/가사, 부동산 분쟁, 기업 자문, 비만/통증, 청구 보험금 분쟁" data-track></textarea>
       </div>
       <div class="field">
-        <label>주요 학력 / 경력</label>
-        <textarea name="prof_career" rows="3" placeholder="예: OO대 법대 졸, OO지방법원 부장판사 출신 12년, OO병원 전문의 8년" data-track></textarea>
+        <label data-i18n="x_prof_career">주요 학력 / 경력</label>
+        <textarea name="prof_career" rows="3" data-ph="ph_prof_career" placeholder="예: OO대 법대 졸, OO지방법원 부장판사 출신 12년, OO병원 전문의 8년" data-track></textarea>
       </div>
       <div class="field">
-        <label>자격 / 인증 / 학회 활동</label>
-        <input type="text" name="prof_license" placeholder="예: 대한변호사협회 형사 전문등록, OO학회 정회원, 세무사회 우수회원" data-track>
+        <label data-i18n="x_prof_license">자격 / 인증 / 학회 활동</label>
+        <input type="text" name="prof_license" data-ph="ph_prof_license" placeholder="예: 대한변호사협회 형사 전문등록, OO학회 정회원, 세무사회 우수회원" data-track>
       </div>
       <div class="field">
-        <label>대표 성과 / 수상</label>
-        <textarea name="prof_award" rows="2" placeholder="예: 대법원 무죄 판결, 베스트 닥터 선정, 언론 기고/방송 출연" data-track></textarea>
+        <label data-i18n="x_prof_award">대표 성과 / 수상</label>
+        <textarea name="prof_award" rows="2" data-ph="ph_prof_award" placeholder="예: 대법원 무죄 판결, 베스트 닥터 선정, 언론 기고/방송 출연" data-track></textarea>
       </div>
       <div class="field">
-        <label>상담료 / 비용 안내</label>
-        <input type="text" name="prof_fee" placeholder="예: 초회 상담 무료, 1시간 5만원, 사건별 견적" data-track>
+        <label data-i18n="x_prof_fee">상담료 / 비용 안내</label>
+        <input type="text" name="prof_fee" data-ph="ph_prof_fee" placeholder="예: 초회 상담 무료, 1시간 5만원, 사건별 견적" data-track>
       </div>
       <div class="field">
-        <label>PR 포인트 <span class="hint">고객이 꼭 알아야 할 차별점</span></label>
-        <textarea name="prof_pr_point" rows="3" placeholder="예: 판사 출신 경력 / 24시간 응대 / 분야 한정 집중 수임 / 후관예우 없음" data-track></textarea>
+        <label data-i18n="x_prof_pr">PR 포인트 <span class="hint" data-i18n="hint_prof_pr">고객이 꼭 알아야 할 차별점</span></label>
+        <textarea name="prof_pr_point" rows="3" data-ph="ph_prof_pr" placeholder="예: 판사 출신 경력 / 24시간 응대 / 분야 한정 집중 수임 / 후관예우 없음" data-track></textarea>
       </div>
     </div>
   </div>
@@ -1075,31 +1119,31 @@
   <div class="section" data-section="menu">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fce7f3;color:#db2777;">📋</div>
-      <h2>서비스 / 상품 정보</h2>
-      <span class="section-badge badge-required">필수</span>
+      <h2 data-i18n="s_menu">서비스 / 상품 정보</h2>
+      <span class="section-badge badge-required" data-i18n="badge_required">필수</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>서비스/상품 목록 * <span class="hint">항목명 / 가격 / 간단 설명</span></label>
-        <textarea name="menu_list" rows="6" placeholder="예 (음식점): 김치찌개 / 9,000원 / 직접 담근 김치로 끓인 찌개&#10;예 (뷰티): 기본 피부관리 / 50,000원 / 클렌징+마사지+팩&#10;예 (학원): 초등영어반 / 월 150,000원 / 주 3회, 원어민 수업&#10;예 (IT): 반응형 웹사이트 / 200만원~ / 기획+디자인+개발" data-track></textarea>
+        <label><span data-i18n="f_menu_list">서비스/상품 목록</span> * <span class="hint" data-i18n="hint_menu_list">항목명 / 가격 / 간단 설명</span></label>
+        <textarea name="menu_list" rows="6" data-ph="ph_menu_list" placeholder="예 (음식점): 김치찌개 / 9,000원 / 직접 담근 김치로 끓인 찌개&#10;예 (뷰티): 기본 피부관리 / 50,000원 / 클렌징+마사지+팩&#10;예 (학원): 초등영어반 / 월 150,000원 / 주 3회, 원어민 수업&#10;예 (IT): 반응형 웹사이트 / 200만원~ / 기획+디자인+개발" data-track></textarea>
       </div>
       <div class="field">
-        <label>대표 서비스/상품 <span class="hint">3~5개, 홈페이지 메인에 노출됩니다</span></label>
-        <input type="text" name="signature_menu" placeholder="예: 시그니처 메뉴, 인기 시술, 대표 프로그램 등" data-track>
+        <label data-i18n="f_signature">대표 서비스/상품 <span class="hint" data-i18n="hint_signature">3~5개, 홈페이지 메인에 노출됩니다</span></label>
+        <input type="text" name="signature_menu" data-ph="ph_signature" placeholder="예: 시그니처 메뉴, 인기 시술, 대표 프로그램 등" data-track>
       </div>
       <div class="field">
-        <label>패키지/코스 구성 <span class="hint">있으면 적어주세요</span></label>
-        <textarea name="course" rows="3" placeholder="예: 2인 코스, 3개월 패키지, 초기 상담 무료 등" data-track></textarea>
+        <label data-i18n="f_course">패키지/코스 구성 <span class="hint" data-i18n="hint_optional_have">있으면 적어주세요</span></label>
+        <textarea name="course" rows="3" data-ph="ph_course" placeholder="예: 2인 코스, 3개월 패키지, 초기 상담 무료 등" data-track></textarea>
       </div>
       <div class="field">
-        <label>시즌/한정 서비스</label>
-        <input type="text" name="seasonal" placeholder="예: 여름 한정 메뉴, 신학기 특별반, 시즌 할인 등" data-track>
+        <label data-i18n="f_seasonal">시즌/한정 서비스</label>
+        <input type="text" name="seasonal" data-ph="ph_seasonal" placeholder="예: 여름 한정 메뉴, 신학기 특별반, 시즌 할인 등" data-track>
       </div>
       <div class="field">
         <div class="file-upload">
-          <strong>가격표/메뉴판 사진</strong>
-          현재 사용 중인 가격표/메뉴판을 사진으로 찍어서 이메일로 보내주시면 됩니다
+          <strong data-i18n="upload_menu_title">가격표/메뉴판 사진</strong>
+          <span data-i18n="upload_menu_desc">현재 사용 중인 가격표/메뉴판을 사진으로 찍어서 이메일로 보내주시면 됩니다</span>
         </div>
       </div>
     </div>
@@ -1109,45 +1153,45 @@
   <div class="section" data-section="images">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#e0e7ff;color:#4f46e5;">📸</div>
-      <h2>이미지 소스</h2>
-      <span class="section-badge badge-required">필수</span>
+      <h2 data-i18n="s_images">이미지 소스</h2>
+      <span class="section-badge badge-required" data-i18n="badge_required">필수</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
-      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">
+      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;" data-i18nh="images_desc">
         아래 항목의 사진을 준비해주세요. 고화질일수록 홈페이지가 예쁘게 나옵니다!<br>
         스마트폰 촬영 시 <b>가로 모드</b>로 찍어주시면 좋습니다.
       </p>
       <div class="field">
-        <label>보유 중인 이미지를 체크해주세요</label>
+        <label data-i18n="f_have_images">보유 중인 이미지를 체크해주세요</label>
         <div class="check-group" data-group="보유이미지">
-          <div class="check-item"><input type="checkbox" id="img1" data-track><label for="img1">로고 파일</label></div>
-          <div class="check-item"><input type="checkbox" id="img2" data-track><label for="img2">매장/사무실 외관</label></div>
-          <div class="check-item"><input type="checkbox" id="img3" data-track><label for="img3">매장/사무실 내부</label></div>
-          <div class="check-item"><input type="checkbox" id="img4" data-track><label for="img4">상품/서비스 사진</label></div>
-          <div class="check-item"><input type="checkbox" id="img5" data-track><label for="img5">대표자 사진</label></div>
-          <div class="check-item"><input type="checkbox" id="img6" data-track><label for="img6">직원/팀 사진</label></div>
-          <div class="check-item"><input type="checkbox" id="img7" data-track><label for="img7">포트폴리오/시공사례</label></div>
-          <div class="check-item"><input type="checkbox" id="img8" data-track><label for="img8">자격증/인허가증</label></div>
+          <div class="check-item"><input type="checkbox" id="img1" data-track><label for="img1" data-i18n="img_logo">로고 파일</label></div>
+          <div class="check-item"><input type="checkbox" id="img2" data-track><label for="img2" data-i18n="img_exterior">매장/사무실 외관</label></div>
+          <div class="check-item"><input type="checkbox" id="img3" data-track><label for="img3" data-i18n="img_interior">매장/사무실 내부</label></div>
+          <div class="check-item"><input type="checkbox" id="img4" data-track><label for="img4" data-i18n="img_product">상품/서비스 사진</label></div>
+          <div class="check-item"><input type="checkbox" id="img5" data-track><label for="img5" data-i18n="img_ceo">대표자 사진</label></div>
+          <div class="check-item"><input type="checkbox" id="img6" data-track><label for="img6" data-i18n="img_team">직원/팀 사진</label></div>
+          <div class="check-item"><input type="checkbox" id="img7" data-track><label for="img7" data-i18n="img_portfolio">포트폴리오/시공사례</label></div>
+          <div class="check-item"><input type="checkbox" id="img8" data-track><label for="img8" data-i18n="img_cert">자격증/인허가증</label></div>
         </div>
       </div>
       <div class="field">
         <div class="file-upload">
-          <strong>사진은 아래 이메일로 보내주세요</strong>
+          <strong data-i18n="upload_photo_title">사진은 아래 이메일로 보내주세요</strong>
           <br><br>
           <b>k50004950@gmail.com</b><br><br>
-          메일 제목에 <b>[업체명/성함]</b> 을 적어주시고,<br>
+          <span data-i18nh="upload_photo_desc">메일 제목에 <b>[업체명/성함]</b> 을 적어주시고,<br>
           아래 사진들을 첨부해서 보내주시면 됩니다.<br><br>
           - 매장/사무실 외관·내부 사진<br>
           - 메뉴/상품/서비스 사진<br>
           - 로고 파일 (있는 경우)<br>
           - 대표자/팀 사진<br>
-          - 사업자등록증, 자격증, 포트폴리오 등
+          - 사업자등록증, 자격증, 포트폴리오 등</span>
         </div>
       </div>
       <div class="field">
-        <label>이미지 관련 참고사항</label>
-        <textarea name="image_note" rows="2" placeholder="예: 로고 파일은 AI 파일로 있어요 / 사진 촬영 도와주시면 좋겠어요" data-track></textarea>
+        <label data-i18n="f_image_note">이미지 관련 참고사항</label>
+        <textarea name="image_note" rows="2" data-ph="ph_image_note" placeholder="예: 로고 파일은 AI 파일로 있어요 / 사진 촬영 도와주시면 좋겠어요" data-track></textarea>
       </div>
     </div>
   </div>
@@ -1156,60 +1200,110 @@
   <div class="section" data-section="intro">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#d1fae5;color:#059669;">✨</div>
-      <h2>비즈니스 소개 / 특징</h2>
-      <span class="section-badge badge-required">중요</span>
+      <h2 data-i18n="s_intro">비즈니스 소개 / 특징</h2>
+      <span class="section-badge badge-required" data-i18n="badge_important">중요</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
-      <div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:10px; padding:14px 16px; margin-bottom:18px; font-size:13.5px; color:#065f46; line-height:1.75;">
+      <div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:10px; padding:14px 16px; margin-bottom:18px; font-size:13.5px; color:#065f46; line-height:1.75;" data-i18nh="intro_box">
         💬 <b>이 부분이 홈페이지의 핵심입니다.</b><br>
         우리 사업의 <b>장점</b>과 대표님의 <b>사업 계획·방향</b>을 알려주시면,<br>
         그에 맞게 카피·구성·디자인이 반영됩니다. (편하게, 길게 적어주셔도 좋습니다)
       </div>
       <div class="field">
-        <label>한 줄 소개 <span class="hint">슬로건, 캐치프레이즈</span></label>
-        <input type="text" name="slogan" placeholder="예: 고객의 성공이 우리의 성공입니다" data-track>
+        <label data-i18n="f_slogan">한 줄 소개 <span class="hint" data-i18n="hint_slogan">슬로건, 캐치프레이즈</span></label>
+        <input type="text" name="slogan" data-ph="ph_slogan" placeholder="예: 고객의 성공이 우리의 성공입니다" data-track>
       </div>
       <div class="field">
-        <label>우리 사업의 장점 <span class="hint">경쟁사 대비 차별점, 자랑하고 싶은 점</span></label>
-        <textarea name="biz_strength" rows="4" placeholder="예:&#10;- 동종업계 10년 이상 경력, 누적 고객 1,000명 이상&#10;- 1:1 전담 매니저 배정, 사후 관리까지 책임짐&#10;- 동일 지역 최저가 / 프리미엄 재료만 사용" data-track></textarea>
+        <label data-i18n="f_strength">우리 사업의 장점 <span class="hint" data-i18n="hint_strength">경쟁사 대비 차별점, 자랑하고 싶은 점</span></label>
+        <textarea name="biz_strength" rows="4" data-ph="ph_strength" placeholder="예:&#10;- 동종업계 10년 이상 경력, 누적 고객 1,000명 이상&#10;- 1:1 전담 매니저 배정, 사후 관리까지 책임짐&#10;- 동일 지역 최저가 / 프리미엄 재료만 사용" data-track></textarea>
       </div>
       <div class="field">
-        <label>대표님 사업 계획 / 방향 <span class="hint">앞으로 어떤 고객을 어떻게 모실 계획이신지</span></label>
-        <textarea name="biz_plan" rows="4" placeholder="예:&#10;- 30~40대 직장인 고객 중심으로 확장 예정&#10;- 내년에 2호점 오픈, 프랜차이즈화 목표&#10;- 온라인 상담 비중을 70%까지 늘릴 계획&#10;- VIP 멤버십 도입해 단골 관리 강화" data-track></textarea>
+        <label data-i18n="f_plan">대표님 사업 계획 / 방향 <span class="hint" data-i18n="hint_plan">앞으로 어떤 고객을 어떻게 모실 계획이신지</span></label>
+        <textarea name="biz_plan" rows="4" data-ph="ph_plan" placeholder="예:&#10;- 30~40대 직장인 고객 중심으로 확장 예정&#10;- 내년에 2호점 오픈, 프랜차이즈화 목표&#10;- 온라인 상담 비중을 70%까지 늘릴 계획&#10;- VIP 멤버십 도입해 단골 관리 강화" data-track></textarea>
       </div>
       <div class="field">
-        <label>비즈니스 스토리 <span class="hint">창업 계기, 철학, 가치관</span></label>
-        <textarea name="story" rows="4" placeholder="예: 10년간 쌓아온 경험을 바탕으로..." data-track></textarea>
+        <label data-i18n="f_story">비즈니스 스토리 <span class="hint" data-i18n="hint_story">창업 계기, 철학, 가치관</span></label>
+        <textarea name="story" rows="4" data-ph="ph_story" placeholder="예: 10년간 쌓아온 경험을 바탕으로..." data-track></textarea>
       </div>
       <div class="field">
-        <label>강점 키워드</label>
+        <label data-i18n="f_keywords">강점 키워드</label>
         <div class="check-group" data-group="강점키워드">
-          <div class="check-item"><input type="checkbox" id="kw1" data-track><label for="kw1">전문성</label></div>
-          <div class="check-item"><input type="checkbox" id="kw2" data-track><label for="kw2">가성비</label></div>
-          <div class="check-item"><input type="checkbox" id="kw3" data-track><label for="kw3">프리미엄</label></div>
-          <div class="check-item"><input type="checkbox" id="kw4" data-track><label for="kw4">1:1 맞춤</label></div>
-          <div class="check-item"><input type="checkbox" id="kw5" data-track><label for="kw5">친절한 상담</label></div>
-          <div class="check-item"><input type="checkbox" id="kw6" data-track><label for="kw6">경력/노하우</label></div>
-          <div class="check-item"><input type="checkbox" id="kw7" data-track><label for="kw7">깔끔한 시설</label></div>
-          <div class="check-item"><input type="checkbox" id="kw8" data-track><label for="kw8">빠른 응대</label></div>
-          <div class="check-item"><input type="checkbox" id="kw9" data-track><label for="kw9">수제/핸드메이드</label></div>
-          <div class="check-item"><input type="checkbox" id="kw10" data-track><label for="kw10">지역 밀착</label></div>
-          <div class="check-item"><input type="checkbox" id="kw11" data-track><label for="kw11">무료 상담</label></div>
-          <div class="check-item"><input type="checkbox" id="kw12" data-track><label for="kw12">자격/인증 보유</label></div>
+          <div class="check-item"><input type="checkbox" id="kw1" data-track><label for="kw1" data-i18n="kw_expertise">전문성</label></div>
+          <div class="check-item"><input type="checkbox" id="kw2" data-track><label for="kw2" data-i18n="kw_value">가성비</label></div>
+          <div class="check-item"><input type="checkbox" id="kw3" data-track><label for="kw3" data-i18n="kw_premium">프리미엄</label></div>
+          <div class="check-item"><input type="checkbox" id="kw4" data-track><label for="kw4" data-i18n="kw_custom">1:1 맞춤</label></div>
+          <div class="check-item"><input type="checkbox" id="kw5" data-track><label for="kw5" data-i18n="kw_kind">친절한 상담</label></div>
+          <div class="check-item"><input type="checkbox" id="kw6" data-track><label for="kw6" data-i18n="kw_experience">경력/노하우</label></div>
+          <div class="check-item"><input type="checkbox" id="kw7" data-track><label for="kw7" data-i18n="kw_clean">깔끔한 시설</label></div>
+          <div class="check-item"><input type="checkbox" id="kw8" data-track><label for="kw8" data-i18n="kw_fast">빠른 응대</label></div>
+          <div class="check-item"><input type="checkbox" id="kw9" data-track><label for="kw9" data-i18n="kw_handmade">수제/핸드메이드</label></div>
+          <div class="check-item"><input type="checkbox" id="kw10" data-track><label for="kw10" data-i18n="kw_local">지역 밀착</label></div>
+          <div class="check-item"><input type="checkbox" id="kw11" data-track><label for="kw11" data-i18n="kw_free">무료 상담</label></div>
+          <div class="check-item"><input type="checkbox" id="kw12" data-track><label for="kw12" data-i18n="kw_cert">자격/인증 보유</label></div>
         </div>
       </div>
       <div class="field">
-        <label>기타 강점 <span class="hint">위에 없는 키워드가 있으면</span></label>
-        <input type="text" name="keyword_etc" placeholder="예: 비건 메뉴, 글루텐프리" data-track>
+        <label data-i18n="f_keyword_etc">기타 강점 <span class="hint" data-i18n="hint_keyword_etc">위에 없는 키워드가 있으면</span></label>
+        <input type="text" name="keyword_etc" data-ph="ph_keyword_etc" placeholder="예: 비건 메뉴, 글루텐프리" data-track>
       </div>
       <div class="field">
-        <label>언론/방송/수상 이력</label>
-        <textarea name="media" rows="2" placeholder="예: 생활의달인 출연, 우수업체 선정, 블로거 리뷰 다수" data-track></textarea>
+        <label data-i18n="f_media">언론/방송/수상 이력</label>
+        <textarea name="media" rows="2" data-ph="ph_media" placeholder="예: 생활의달인 출연, 우수업체 선정, 블로거 리뷰 다수" data-track></textarea>
       </div>
       <div class="field">
-        <label>관련 링크 <span class="hint">언론 기사, 방송 영상, 수상 페이지 URL (여러 개는 줄바꿈)</span></label>
+        <label data-i18n="f_media_links">관련 링크 <span class="hint" data-i18n="hint_media_links">언론 기사, 방송 영상, 수상 페이지 URL (여러 개는 줄바꿈)</span></label>
         <textarea name="media_links" rows="2" placeholder="예: https://news.com/article/123&#10;https://youtu.be/xxxx" data-track></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.5 홈페이지 목표 & 신뢰 지표 -->
+  <div class="section" data-section="goal">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:#fef3c7;color:#d97706;">🎯</div>
+      <h2 data-i18n="s_goal">홈페이지 목표 &amp; 신뢰 지표</h2>
+      <span class="section-badge badge-required" data-i18n="badge_important">중요</span>
+      <span class="section-toggle">▼</span>
+    </div>
+    <div class="section-body">
+      <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:10px; padding:14px 16px; margin-bottom:18px; font-size:13.5px; color:#92400e; line-height:1.7;" data-i18nh="goal_box">
+        🎯 <b>이 홈페이지로 무엇을 얻고 싶으신가요?</b><br>
+        목표가 분명할수록 사이트 구조·버튼·문구가 그 목표에 맞춰 설계됩니다.
+      </div>
+      <div class="field">
+        <label><span data-i18n="f_goal">이 홈페이지의 1순위 목표</span> <span class="hint" data-i18n="hint_goal">하나만 선택</span></label>
+        <div class="check-group">
+          <div class="check-item"><input type="radio" name="site_goal" id="goal1" value="전화 문의 늘리기" style="display:none" data-track><label for="goal1" data-i18n="goal_call">전화 문의 늘리기</label></div>
+          <div class="check-item"><input type="radio" name="site_goal" id="goal2" value="온라인 예약 받기" style="display:none" data-track><label for="goal2" data-i18n="goal_booking">온라인 예약 받기</label></div>
+          <div class="check-item"><input type="radio" name="site_goal" id="goal3" value="견적·상담 신청 받기" style="display:none" data-track><label for="goal3" data-i18n="goal_quote">견적·상담 신청 받기</label></div>
+          <div class="check-item"><input type="radio" name="site_goal" id="goal4" value="매장 방문 유도" style="display:none" data-track><label for="goal4" data-i18n="goal_visit">매장 방문 유도</label></div>
+          <div class="check-item"><input type="radio" name="site_goal" id="goal5" value="온라인 판매" style="display:none" data-track><label for="goal5" data-i18n="goal_sell">온라인 판매</label></div>
+          <div class="check-item"><input type="radio" name="site_goal" id="goal6" value="브랜드 신뢰도 제고" style="display:none" data-track><label for="goal6" data-i18n="goal_brand">브랜드 신뢰도 제고</label></div>
+          <div class="check-item"><input type="radio" name="site_goal" id="goal7" value="기타" style="display:none" data-track><label for="goal7" data-i18n="goal_etc">기타</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="f_cta">방문자가 꼭 했으면 하는 행동 <span class="hint" data-i18n="hint_cta">딱 하나</span></label>
+        <input type="text" name="main_cta" data-ph="ph_cta" placeholder="예: 전화 걸기 / 카톡 상담 / 예약 버튼 클릭" data-track>
+      </div>
+      <div class="field">
+        <label data-i18n="f_target">주요 타겟 고객 <span class="hint" data-i18n="hint_target">연령·성별·지역·상황을 구체적으로</span></label>
+        <textarea name="target_customer" rows="3" data-ph="ph_target" placeholder="예: 30~40대 직장인 여성 / 강남 거주 / 첫 시술 고민 중" data-track></textarea>
+      </div>
+      <div class="inline-fields">
+        <div class="field">
+          <label data-i18n="f_est_year">설립 / 오픈 연도</label>
+          <input type="text" name="est_year" data-ph="ph_est_year" placeholder="예: 2015" data-track>
+        </div>
+        <div class="field">
+          <label data-i18n="f_count">누적 고객 / 시공·판매 건수</label>
+          <input type="text" name="customer_count" data-ph="ph_count" placeholder="예: 누적 1,200명 / 시공 500건" data-track>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="f_guarantee">보증 / 환불 / A/S 정책 <span class="hint" data-i18n="hint_guarantee">신뢰를 주는 약속</span></label>
+        <input type="text" name="guarantee" data-ph="ph_guarantee" placeholder="예: 시공 후 1년 무상 A/S / 100% 환불 보장" data-track>
       </div>
     </div>
   </div>
@@ -1218,49 +1312,49 @@
   <div class="section" data-section="facility">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef9c3;color:#ca8a04;">🪑</div>
-      <h2>시설 및 편의 정보</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_facility">시설 및 편의 정보</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>해당하는 항목을 모두 체크해주세요</label>
+        <label data-i18n="f_facility_check">해당하는 항목을 모두 체크해주세요</label>
         <div class="check-group" data-group="편의시설">
-          <div class="check-item"><input type="checkbox" id="fac1" data-track><label for="fac1">예약 가능</label></div>
-          <div class="check-item"><input type="checkbox" id="fac2" data-track><label for="fac2">주차 가능</label></div>
-          <div class="check-item"><input type="checkbox" id="fac3" data-track><label for="fac3">와이파이</label></div>
-          <div class="check-item"><input type="checkbox" id="fac4" data-track><label for="fac4">엘리베이터</label></div>
-          <div class="check-item"><input type="checkbox" id="fac5" data-track><label for="fac5">장애인 편의시설</label></div>
-          <div class="check-item"><input type="checkbox" id="fac6" data-track><label for="fac6">단체 수용 가능</label></div>
-          <div class="check-item"><input type="checkbox" id="fac7" data-track><label for="fac7">개별룸/독립공간</label></div>
-          <div class="check-item"><input type="checkbox" id="fac8" data-track><label for="fac8">키즈존/유아시설</label></div>
-          <div class="check-item"><input type="checkbox" id="fac9" data-track><label for="fac9">반려동물 동반</label></div>
-          <div class="check-item"><input type="checkbox" id="fac10" data-track><label for="fac10">포장/배달 가능</label></div>
-          <div class="check-item"><input type="checkbox" id="fac11" data-track><label for="fac11">테라스/야외공간</label></div>
-          <div class="check-item"><input type="checkbox" id="fac12" data-track><label for="fac12">발렛 주차</label></div>
-          <div class="check-item"><input type="checkbox" id="fac13" data-track><label for="fac13">무료 상담</label></div>
-          <div class="check-item"><input type="checkbox" id="fac14" data-track><label for="fac14">온라인 상담 가능</label></div>
+          <div class="check-item"><input type="checkbox" id="fac1" data-track><label for="fac1" data-i18n="fac_reservation">예약 가능</label></div>
+          <div class="check-item"><input type="checkbox" id="fac2" data-track><label for="fac2" data-i18n="fac_parking">주차 가능</label></div>
+          <div class="check-item"><input type="checkbox" id="fac3" data-track><label for="fac3" data-i18n="fac_wifi">와이파이</label></div>
+          <div class="check-item"><input type="checkbox" id="fac4" data-track><label for="fac4" data-i18n="fac_elevator">엘리베이터</label></div>
+          <div class="check-item"><input type="checkbox" id="fac5" data-track><label for="fac5" data-i18n="fac_disabled">장애인 편의시설</label></div>
+          <div class="check-item"><input type="checkbox" id="fac6" data-track><label for="fac6" data-i18n="fac_group">단체 수용 가능</label></div>
+          <div class="check-item"><input type="checkbox" id="fac7" data-track><label for="fac7" data-i18n="fac_room">개별룸/독립공간</label></div>
+          <div class="check-item"><input type="checkbox" id="fac8" data-track><label for="fac8" data-i18n="fac_kids">키즈존/유아시설</label></div>
+          <div class="check-item"><input type="checkbox" id="fac9" data-track><label for="fac9" data-i18n="fac_pet">반려동물 동반</label></div>
+          <div class="check-item"><input type="checkbox" id="fac10" data-track><label for="fac10" data-i18n="fac_takeout">포장/배달 가능</label></div>
+          <div class="check-item"><input type="checkbox" id="fac11" data-track><label for="fac11" data-i18n="fac_terrace">테라스/야외공간</label></div>
+          <div class="check-item"><input type="checkbox" id="fac12" data-track><label for="fac12" data-i18n="fac_valet">발렛 주차</label></div>
+          <div class="check-item"><input type="checkbox" id="fac13" data-track><label for="fac13" data-i18n="fac_freeconsult">무료 상담</label></div>
+          <div class="check-item"><input type="checkbox" id="fac14" data-track><label for="fac14" data-i18n="fac_online">온라인 상담 가능</label></div>
         </div>
       </div>
       <div class="inline-fields">
         <div class="field">
-          <label>수용 인원 / 규모</label>
-          <input type="text" name="seats" placeholder="예: 약 40석 / 상담실 3개 / 200평" data-track>
+          <label data-i18n="f_seats">수용 인원 / 규모</label>
+          <input type="text" name="seats" data-ph="ph_seats" placeholder="예: 약 40석 / 상담실 3개 / 200평" data-track>
         </div>
         <div class="field">
-          <label>단체 수용 최대 인원</label>
-          <input type="text" name="group_max" placeholder="예: 최대 20명" data-track>
+          <label data-i18n="f_group_max">단체 수용 최대 인원</label>
+          <input type="text" name="group_max" data-ph="ph_group_max" placeholder="예: 최대 20명" data-track>
         </div>
       </div>
       <div class="field">
-        <label>예약/상담 방법</label>
+        <label data-i18n="f_reserve_method">예약/상담 방법</label>
         <div class="check-group" data-group="예약방법">
-          <div class="check-item"><input type="checkbox" id="rsv1" data-track><label for="rsv1">전화 예약</label></div>
-          <div class="check-item"><input type="checkbox" id="rsv2" data-track><label for="rsv2">네이버 예약</label></div>
-          <div class="check-item"><input type="checkbox" id="rsv3" data-track><label for="rsv3">카카오톡 상담</label></div>
-          <div class="check-item"><input type="checkbox" id="rsv4" data-track><label for="rsv4">홈페이지 폼</label></div>
-          <div class="check-item"><input type="checkbox" id="rsv5" data-track><label for="rsv5">방문 상담</label></div>
-          <div class="check-item"><input type="checkbox" id="rsv6" data-track><label for="rsv6">기타</label></div>
+          <div class="check-item"><input type="checkbox" id="rsv1" data-track><label for="rsv1" data-i18n="rsv_phone">전화 예약</label></div>
+          <div class="check-item"><input type="checkbox" id="rsv2" data-track><label for="rsv2" data-i18n="rsv_naver">네이버 예약</label></div>
+          <div class="check-item"><input type="checkbox" id="rsv3" data-track><label for="rsv3" data-i18n="rsv_kakao">카카오톡 상담</label></div>
+          <div class="check-item"><input type="checkbox" id="rsv4" data-track><label for="rsv4" data-i18n="rsv_form">홈페이지 폼</label></div>
+          <div class="check-item"><input type="checkbox" id="rsv5" data-track><label for="rsv5" data-i18n="rsv_visit">방문 상담</label></div>
+          <div class="check-item"><input type="checkbox" id="rsv6" data-track><label for="rsv6" data-i18n="rsv_etc">기타</label></div>
         </div>
       </div>
     </div>
@@ -1270,68 +1364,70 @@
   <div class="section" data-section="requirements">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#ede9fe;color:#7c3aed;">🎨</div>
-      <h2>홈페이지 요구사항</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_requirements">홈페이지 요구사항</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>원하는 분위기 또는 참고 사이트</label>
-        <textarea name="ref_sites" rows="3" placeholder="예: 깔끔하고 모던한 느낌 / 참고 사이트: www.example.com" data-track></textarea>
+        <label data-i18n="f_ref_sites">원하는 분위기 또는 참고 사이트</label>
+        <textarea name="ref_sites" rows="3" data-ph="ph_ref_sites" placeholder="예: 깔끔하고 모던한 느낌 / 참고 사이트: www.example.com" data-track></textarea>
       </div>
       <div class="field">
-        <label>선호 색상 <span class="hint">없으면 로고 기반으로 정합니다</span></label>
-        <input type="text" name="color_pref" placeholder="예: 따뜻한 브라운 계열 / 깔끔한 화이트+블랙" data-track>
+        <label data-i18n="f_color">선호 색상 <span class="hint" data-i18n="hint_color">없으면 로고 기반으로 정합니다</span></label>
+        <input type="text" name="color_pref" data-ph="ph_color" placeholder="예: 따뜻한 브라운 계열 / 깔끔한 화이트+블랙" data-track>
       </div>
       <div class="field">
-        <label>필요한 페이지 구성</label>
+        <label data-i18n="f_pages">필요한 페이지 구성</label>
         <div class="check-group" data-group="페이지구성">
-          <div class="check-item"><input type="checkbox" id="pg1" data-track checked><label for="pg1">메인(홈)</label></div>
-          <div class="check-item"><input type="checkbox" id="pg2" data-track checked><label for="pg2">서비스/메뉴 소개</label></div>
-          <div class="check-item"><input type="checkbox" id="pg3" data-track checked><label for="pg3">오시는 길</label></div>
-          <div class="check-item"><input type="checkbox" id="pg4" data-track><label for="pg4">예약/상담 페이지</label></div>
-          <div class="check-item"><input type="checkbox" id="pg5" data-track><label for="pg5">회사/매장 소개</label></div>
-          <div class="check-item"><input type="checkbox" id="pg6" data-track><label for="pg6">갤러리/포트폴리오</label></div>
-          <div class="check-item"><input type="checkbox" id="pg7" data-track><label for="pg7">공지/이벤트</label></div>
-          <div class="check-item"><input type="checkbox" id="pg8" data-track><label for="pg8">FAQ/자주 묻는 질문</label></div>
-          <div class="check-item"><input type="checkbox" id="pg9" data-track><label for="pg9">고객 후기</label></div>
+          <div class="check-item"><input type="checkbox" id="pg1" data-track checked><label for="pg1" data-i18n="pg_main">메인(홈)</label></div>
+          <div class="check-item"><input type="checkbox" id="pg2" data-track checked><label for="pg2" data-i18n="pg_service">서비스/메뉴 소개</label></div>
+          <div class="check-item"><input type="checkbox" id="pg3" data-track checked><label for="pg3" data-i18n="pg_location">오시는 길</label></div>
+          <div class="check-item"><input type="checkbox" id="pg4" data-track><label for="pg4" data-i18n="pg_reserve">예약/상담 페이지</label></div>
+          <div class="check-item"><input type="checkbox" id="pg5" data-track><label for="pg5" data-i18n="pg_about">회사/매장 소개</label></div>
+          <div class="check-item"><input type="checkbox" id="pg6" data-track><label for="pg6" data-i18n="pg_gallery">갤러리/포트폴리오</label></div>
+          <div class="check-item"><input type="checkbox" id="pg7" data-track><label for="pg7" data-i18n="pg_notice">공지/이벤트</label></div>
+          <div class="check-item"><input type="checkbox" id="pg8" data-track><label for="pg8" data-i18n="pg_faq">FAQ/자주 묻는 질문</label></div>
+          <div class="check-item"><input type="checkbox" id="pg9" data-track><label for="pg9" data-i18n="pg_review">고객 후기</label></div>
         </div>
       </div>
       <div class="field">
-        <label>도메인 보유 여부</label>
+        <label data-i18n="f_domain_status">도메인 보유 여부</label>
         <div class="check-group">
-          <div class="check-item"><input type="radio" name="domain_status" id="dom1" value="있음" style="display:none" data-track onchange="toggleDomainField()"><label for="dom1">있음</label></div>
-          <div class="check-item"><input type="radio" name="domain_status" id="dom2" value="없음" style="display:none" data-track onchange="toggleDomainField()"><label for="dom2">없음</label></div>
+          <div class="check-item"><input type="radio" name="domain_status" id="dom1" value="있음" style="display:none" data-track onchange="toggleDomainField()"><label for="dom1" data-i18n="opt_yes">있음</label></div>
+          <div class="check-item"><input type="radio" name="domain_status" id="dom2" value="없음" style="display:none" data-track onchange="toggleDomainField()"><label for="dom2" data-i18n="opt_no">없음</label></div>
         </div>
       </div>
       <div class="field" id="domainField" style="display:none;">
-        <label>보유 도메인 주소</label>
+        <label data-i18n="f_domain">보유 도메인 주소</label>
         <input type="text" name="domain" placeholder="예: www.myshop.co.kr" data-track>
       </div>
       <div class="field">
-        <label>희망 완성 일정</label>
+        <label data-i18n="f_timeline">희망 완성 일정</label>
         <div class="check-group">
-          <div class="check-item"><input type="radio" name="timeline" id="tl1" value="2주 이내" style="display:none" data-track><label for="tl1">2주 이내</label></div>
-          <div class="check-item"><input type="radio" name="timeline" id="tl2" value="1개월" style="display:none" data-track><label for="tl2">1개월</label></div>
-          <div class="check-item"><input type="radio" name="timeline" id="tl3" value="2~3개월" style="display:none" data-track><label for="tl3">2~3개월</label></div>
-          <div class="check-item"><input type="radio" name="timeline" id="tl4" value="여유있게" style="display:none" data-track><label for="tl4">여유있게</label></div>
+          <div class="check-item"><input type="radio" name="timeline" id="tl1" value="2주 이내" style="display:none" data-track><label for="tl1" data-i18n="tl_2weeks">2주 이내</label></div>
+          <div class="check-item"><input type="radio" name="timeline" id="tl2" value="1개월" style="display:none" data-track><label for="tl2" data-i18n="tl_1month">1개월</label></div>
+          <div class="check-item"><input type="radio" name="timeline" id="tl3" value="2~3개월" style="display:none" data-track><label for="tl3" data-i18n="tl_2to3">2~3개월</label></div>
+          <div class="check-item"><input type="radio" name="timeline" id="tl4" value="여유있게" style="display:none" data-track><label for="tl4" data-i18n="tl_flexible">여유있게</label></div>
         </div>
       </div>
       <div class="field">
-        <label>경쟁 업체 / 벤치마킹 사이트 <span class="hint">참고할 경쟁사 URL</span></label>
-        <textarea name="competitors" rows="2" placeholder="예: competitor1.com, competitor2.com (줄바꿈으로 구분)" data-track></textarea>
+        <label data-i18n="f_competitors">경쟁 업체 / 벤치마킹 사이트 <span class="hint" data-i18n="hint_competitors">참고할 경쟁사 URL</span></label>
+        <textarea name="competitors" rows="2" data-ph="ph_competitors" placeholder="예: competitor1.com, competitor2.com (줄바꿈으로 구분)" data-track></textarea>
       </div>
       <div class="field">
-        <label>참고 영상 / 릴스 <span class="hint">영상 스타일 참고할 것</span></label>
-        <input type="url" name="reference_video" placeholder="예: 인스타 릴스, 유튜브 링크" data-track>
+        <label data-i18n="f_ref_video">참고 영상 / 릴스 <span class="hint" data-i18n="hint_ref_video">영상 스타일 참고할 것</span></label>
+        <input type="url" name="reference_video" data-ph="ph_ref_video" placeholder="예: 인스타 릴스, 유튜브 링크" data-track>
       </div>
       <div class="field">
-        <label>다국어 지원 필요</label>
+        <label data-i18n="f_multilang">다국어 지원 필요</label>
         <div class="check-group" data-group="다국어">
-          <div class="check-item"><input type="checkbox" id="lang1" data-track><label for="lang1">영어</label></div>
-          <div class="check-item"><input type="checkbox" id="lang2" data-track><label for="lang2">중국어</label></div>
-          <div class="check-item"><input type="checkbox" id="lang3" data-track><label for="lang3">일본어</label></div>
-          <div class="check-item"><input type="checkbox" id="lang4" data-track><label for="lang4">필요 없음</label></div>
+          <div class="check-item"><input type="checkbox" id="lang1" data-track><label for="lang1" data-i18n="ml_en">영어</label></div>
+          <div class="check-item"><input type="checkbox" id="lang2" data-track><label for="lang2" data-i18n="ml_zh">중국어</label></div>
+          <div class="check-item"><input type="checkbox" id="lang3" data-track><label for="lang3" data-i18n="ml_ja">일본어</label></div>
+          <div class="check-item"><input type="checkbox" id="lang5" data-track><label for="lang5" data-i18n="ml_ko">한국어</label></div>
+          <div class="check-item"><input type="checkbox" id="lang6" data-track><label for="lang6" data-i18n="ml_fil">필리핀어(타갈로그)</label></div>
+          <div class="check-item"><input type="checkbox" id="lang4" data-track><label for="lang4" data-i18n="ml_none">필요 없음</label></div>
         </div>
       </div>
     </div>
@@ -1341,23 +1437,23 @@
   <div class="section" data-section="contact-pref">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#e0f2fe;color:#0284c7;">📞</div>
-      <h2>연락 관련</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_contact">연락 관련</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>선호 연락 방법</label>
+        <label data-i18n="f_contact_pref">선호 연락 방법</label>
         <div class="check-group" data-group="선호연락">
-          <div class="check-item"><input type="radio" name="contact_pref" id="cp1" value="전화" style="display:none" data-track><label for="cp1">전화</label></div>
-          <div class="check-item"><input type="radio" name="contact_pref" id="cp2" value="카카오톡" style="display:none" data-track><label for="cp2">카카오톡</label></div>
-          <div class="check-item"><input type="radio" name="contact_pref" id="cp3" value="문자" style="display:none" data-track><label for="cp3">문자/SMS</label></div>
-          <div class="check-item"><input type="radio" name="contact_pref" id="cp4" value="이메일" style="display:none" data-track><label for="cp4">이메일</label></div>
+          <div class="check-item"><input type="radio" name="contact_pref" id="cp1" value="전화" style="display:none" data-track><label for="cp1" data-i18n="cp_phone">전화</label></div>
+          <div class="check-item ko-only"><input type="radio" name="contact_pref" id="cp2" value="카카오톡" style="display:none" data-track><label for="cp2">카카오톡</label></div>
+          <div class="check-item"><input type="radio" name="contact_pref" id="cp3" value="문자" style="display:none" data-track><label for="cp3" data-i18n="cp_sms">문자/SMS</label></div>
+          <div class="check-item"><input type="radio" name="contact_pref" id="cp4" value="이메일" style="display:none" data-track><label for="cp4" data-i18n="cp_email">이메일</label></div>
         </div>
       </div>
       <div class="field">
-        <label>연락 가능 시간 <span class="hint">편한 시간대를 알려주세요</span></label>
-        <input type="text" name="contact_time" placeholder="예: 오전 10시~오후 6시 / 언제든 OK" data-track>
+        <label data-i18n="f_contact_time">연락 가능 시간 <span class="hint" data-i18n="hint_contact_time">편한 시간대를 알려주세요</span></label>
+        <input type="text" name="contact_time" data-ph="ph_contact_time" placeholder="예: 오전 10시~오후 6시 / 언제든 OK" data-track>
       </div>
     </div>
   </div>
@@ -1366,26 +1462,26 @@
   <div class="section" data-section="existing-site">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef3c7;color:#d97706;">🌐</div>
-      <h2>기존 홈페이지</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_existing">기존 홈페이지</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>기존 홈페이지가 있나요?</label>
+        <label data-i18n="f_has_existing">기존 홈페이지가 있나요?</label>
         <div class="check-group">
-          <div class="check-item"><input type="radio" name="has_existing_site" id="es1" value="없음 (신규)" style="display:none" data-track><label for="es1">없음 (신규 제작)</label></div>
-          <div class="check-item"><input type="radio" name="has_existing_site" id="es2" value="있음 (리뉴얼)" style="display:none" data-track><label for="es2">있음 (리뉴얼 희망)</label></div>
-          <div class="check-item"><input type="radio" name="has_existing_site" id="es3" value="있음 (유지)" style="display:none" data-track><label for="es3">있음 (참고만)</label></div>
+          <div class="check-item"><input type="radio" name="has_existing_site" id="es1" value="없음 (신규)" style="display:none" data-track><label for="es1" data-i18n="es_new">없음 (신규 제작)</label></div>
+          <div class="check-item"><input type="radio" name="has_existing_site" id="es2" value="있음 (리뉴얼)" style="display:none" data-track><label for="es2" data-i18n="es_renew">있음 (리뉴얼 희망)</label></div>
+          <div class="check-item"><input type="radio" name="has_existing_site" id="es3" value="있음 (유지)" style="display:none" data-track><label for="es3" data-i18n="es_ref">있음 (참고만)</label></div>
         </div>
       </div>
       <div class="field">
-        <label>기존 사이트 주소 <span class="hint">있는 경우</span></label>
+        <label data-i18n="f_existing_url">기존 사이트 주소 <span class="hint" data-i18n="hint_if_any">있는 경우</span></label>
         <input type="url" name="existing_site_url" placeholder="https://..." data-track>
       </div>
       <div class="field">
-        <label>기존 사이트에서 불편했던 점</label>
-        <textarea name="existing_site_issue" rows="2" placeholder="예: 모바일에서 깨짐, 수정이 어려움, 디자인이 오래됨" data-track></textarea>
+        <label data-i18n="f_existing_issue">기존 사이트에서 불편했던 점</label>
+        <textarea name="existing_site_issue" rows="2" data-ph="ph_existing_issue" placeholder="예: 모바일에서 깨짐, 수정이 어려움, 디자인이 오래됨" data-track></textarea>
       </div>
     </div>
   </div>
@@ -1394,23 +1490,23 @@
   <div class="section" data-section="reviews">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#fef2f2;color:#dc2626;">⭐</div>
-      <h2>고객 후기</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_reviews">고객 후기</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
-      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">
+      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;" data-i18n="reviews_desc">
         홈페이지에 넣고 싶은 고객 후기가 있으면 적어주세요. 네이버/카카오 리뷰 캡처도 좋습니다!
       </p>
       <div class="field">
-        <label>고객 후기 텍스트 <span class="hint">2~5개 정도면 좋습니다</span></label>
-        <textarea name="reviews" rows="5" placeholder="예:&#10;- 김OO: 참치가 정말 신선하고 맛있어요! 배달도 빨라요.&#10;- 이OO: 사장님이 친절하시고 양도 푸짐합니다.&#10;- 박OO: 단골이에요. 항상 만족합니다." data-track></textarea>
+        <label data-i18n="f_reviews">고객 후기 텍스트 <span class="hint" data-i18n="hint_reviews">2~5개 정도면 좋습니다</span></label>
+        <textarea name="reviews" rows="5" data-ph="ph_reviews" placeholder="예:&#10;- 김OO: 참치가 정말 신선하고 맛있어요! 배달도 빨라요.&#10;- 이OO: 사장님이 친절하시고 양도 푸짐합니다.&#10;- 박OO: 단골이에요. 항상 만족합니다." data-track></textarea>
       </div>
       <div class="field">
-        <label>리뷰 캡처 사진 <span class="hint">네이버/카카오 리뷰 캡처</span></label>
+        <label data-i18n="f_review_cap">리뷰 캡처 사진 <span class="hint" data-i18n="hint_review_cap">네이버/카카오 리뷰 캡처</span></label>
         <div class="file-upload">
-          <strong>리뷰 캡처 사진은 이메일로 보내주세요</strong>
-          네이버, 카카오, 배달앱 리뷰 캡처 등을 k50004950@gmail.com 으로 보내주시면 됩니다
+          <strong data-i18n="upload_review_title">리뷰 캡처 사진은 이메일로 보내주세요</strong>
+          <span data-i18n="upload_review_desc">네이버, 카카오, 배달앱 리뷰 캡처 등을 k50004950@gmail.com 으로 보내주시면 됩니다</span>
         </div>
       </div>
     </div>
@@ -1420,18 +1516,83 @@
   <div class="section" data-section="etc">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#f3e8ff;color:#9333ea;">💬</div>
-      <h2>기타 요청사항</h2>
-      <span class="section-badge badge-optional">선택</span>
+      <h2 data-i18n="s_etc">기타 요청사항</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>현재 진행 중인 이벤트 / 프로모션</label>
-        <textarea name="events" rows="2" placeholder="예: 오픈 기념 전 메뉴 10% 할인 (~4/30)" data-track></textarea>
+        <label data-i18n="f_events">현재 진행 중인 이벤트 / 프로모션</label>
+        <textarea name="events" rows="2" data-ph="ph_events" placeholder="예: 오픈 기념 전 메뉴 10% 할인 (~4/30)" data-track></textarea>
       </div>
       <div class="field">
-        <label>기타 전달사항</label>
-        <textarea name="etc" rows="4" placeholder="홈페이지에 꼭 넣고 싶은 내용이나 추가 요청사항을 자유롭게 적어주세요." data-track></textarea>
+        <label data-i18n="f_etc">기타 전달사항</label>
+        <textarea name="etc" rows="4" data-ph="ph_etc" placeholder="홈페이지에 꼭 넣고 싶은 내용이나 추가 요청사항을 자유롭게 적어주세요." data-track></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 사업자 법적 정보 (필리핀 푸터용) - 해외 전용 -->
+  <div class="section intl-only" data-section="ph-footer">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:#eef2ff;color:#4338ca;">🇵🇭</div>
+      <h2 data-i18n="s_phfooter">사업자 법적 정보 (푸터용)</h2>
+      <span class="section-badge badge-optional" data-i18n="badge_optional">선택</span>
+      <span class="section-toggle">▼</span>
+    </div>
+    <div class="section-body">
+      <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:10px; padding:14px 16px; margin-bottom:18px; font-size:13px; color:#3730a3; line-height:1.7;" data-i18nh="phfooter_box">
+        🇵🇭 <b>홈페이지 푸터 표기용 (필리핀 법규 대응).</b><br>
+        인터넷거래법(RA 11967)·개인정보보호법(RA 10173)에 따라 사업자 신원·연락처·등록정보를 표기하는 것이 좋습니다. 해당되는 것만 입력하세요.
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_regtype">사업 등록 형태</label>
+        <div class="check-group">
+          <div class="check-item"><input type="radio" name="ph_reg_type" id="phreg1" value="Sole Proprietor (DTI)" style="display:none" data-track><label for="phreg1" data-i18n="phreg_sole">개인사업자 (DTI)</label></div>
+          <div class="check-item"><input type="radio" name="ph_reg_type" id="phreg2" value="Corporation/Partnership (SEC)" style="display:none" data-track><label for="phreg2" data-i18n="phreg_corp">법인/파트너십 (SEC)</label></div>
+          <div class="check-item"><input type="radio" name="ph_reg_type" id="phreg3" value="Not yet registered" style="display:none" data-track><label for="phreg3" data-i18n="phreg_none">아직 미등록</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_legalname">공식 등록 상호 <span class="hint" data-i18n="hint_ph_legalname">푸터에 표기될 정식 명칭</span></label>
+        <input type="text" name="ph_legal_name" data-ph="ph_ph_legalname" placeholder="예: Juan Trading Services" data-track>
+      </div>
+      <div class="inline-fields">
+        <div class="field">
+          <label data-i18n="f_ph_regnum">DTI / SEC 등록번호</label>
+          <input type="text" name="ph_reg_number" data-ph="ph_ph_regnum" placeholder="DTI / SEC No." data-track>
+        </div>
+        <div class="field">
+          <label data-i18n="f_ph_tin">BIR TIN <span class="hint" data-i18n="hint_ph_tin">납세자 번호</span></label>
+          <input type="text" name="ph_tin" placeholder="000-000-000-000" data-track>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_regaddr">등록 주소 <span class="hint" data-i18n="hint_ph_regaddr">위 사업장 주소와 다를 경우만</span></label>
+        <input type="text" name="ph_reg_address" data-ph="ph_ph_regaddr" placeholder="Registered business address" data-track>
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_trustmark">DTI 전자상거래 트러스트마크</label>
+        <div class="check-group">
+          <div class="check-item"><input type="radio" name="ph_trustmark" id="phtm1" value="있음" style="display:none" data-track><label for="phtm1" data-i18n="tm_yes">보유</label></div>
+          <div class="check-item"><input type="radio" name="ph_trustmark" id="phtm2" value="신청중" style="display:none" data-track><label for="phtm2" data-i18n="tm_applying">신청 중</label></div>
+          <div class="check-item"><input type="radio" name="ph_trustmark" id="phtm3" value="없음" style="display:none" data-track><label for="phtm3" data-i18n="tm_no">없음</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_privacy">고객 개인정보를 수집하나요? <span class="hint" data-i18n="hint_ph_privacy">문의폼·예약 등 — 수집 시 개인정보방침 필요 (RA 10173)</span></label>
+        <div class="check-group">
+          <div class="check-item"><input type="radio" name="ph_privacy_collect" id="phpv1" value="예" style="display:none" data-track><label for="phpv1" data-i18n="opt_yes">있음</label></div>
+          <div class="check-item"><input type="radio" name="ph_privacy_collect" id="phpv2" value="아니오" style="display:none" data-track><label for="phpv2" data-i18n="opt_no">없음</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_dpo">개인정보 담당자(DPO) 연락처 <span class="hint" data-i18n="hint_ph_dpo">개인정보 수집 시</span></label>
+        <input type="text" name="ph_dpo_contact" data-ph="ph_ph_dpo" placeholder="예: privacy@yourbiz.com" data-track>
+      </div>
+      <div class="field">
+        <label data-i18n="f_ph_refund">반품 / 환불 정책 <span class="hint" data-i18n="hint_ph_refund">상품 판매 시 (RA 11967)</span></label>
+        <textarea name="ph_refund_policy" rows="2" data-ph="ph_ph_refund" placeholder="예: 7일 이내 미사용 제품 환불 / 하자 시 교환" data-track></textarea>
       </div>
     </div>
   </div>
@@ -1440,12 +1601,12 @@
   <div class="section" data-section="privacy">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon" style="background:#f3f4f6;color:#4b5563;">🔒</div>
-      <h2>개인정보 수집 및 이용 동의</h2>
-      <span class="section-badge badge-required">필수</span>
+      <h2 data-i18n="s_privacy">개인정보 수집 및 이용 동의</h2>
+      <span class="section-badge badge-required" data-i18n="badge_required">필수</span>
       <span class="section-toggle">▼</span>
     </div>
     <div class="section-body">
-      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:16px; font-size:13px; color:#374151; line-height:1.7; max-height:180px; overflow-y:auto;">
+      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:16px; font-size:13px; color:#374151; line-height:1.7; max-height:180px; overflow-y:auto;" data-i18nh="privacy_text">
         <b>1. 수집 항목</b><br>
         상호명, 대표자명, 사업자등록번호, 사업장 주소, 전화번호, 이메일, 관리자 비밀번호, 업종 및 사업 관련 정보<br><br>
         <b>2. 수집 및 이용 목적</b><br>
@@ -1460,7 +1621,7 @@
       <div class="field" style="margin-top:14px;">
         <div class="check-item" style="display:inline-block;">
           <input type="checkbox" id="privacyAgree" data-track>
-          <label for="privacyAgree" style="padding:10px 18px; font-size:14px;">위 개인정보 수집 및 이용에 동의합니다. *</label>
+          <label for="privacyAgree" style="padding:10px 18px; font-size:14px;" data-i18n="privacy_agree">위 개인정보 수집 및 이용에 동의합니다. *</label>
         </div>
       </div>
     </div>
@@ -1468,23 +1629,100 @@
 
   <!-- 버튼 -->
   <div class="actions">
-    <button class="btn btn-secondary" onclick="saveData()">💾 임시 저장</button>
-    <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">📨 제출하기</button>
-    <button class="btn btn-danger" onclick="clearAll()">🗑️ 초기화</button>
+    <button class="btn btn-secondary" onclick="saveData()" data-i18n="btn_save">💾 임시 저장</button>
+    <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" data-i18n="btn_submit">📨 제출하기</button>
+    <button class="btn btn-danger" onclick="clearAll()" data-i18n="btn_clear">🗑️ 초기화</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<script src="i18n.js"></script>
 <script>
-  // ★★★ 여기에 Google Apps Script 웹앱 URL을 붙여넣으세요 ★★★
+  // ★★★ Google Apps Script 웹앱 URL ★★★
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8l4Modz8UTneNzbMyTo0JnV__e-gxlAwG9OTl2PbM-wM1uUlKCo_kUSk5HAq2B1lW/exec';
 
-  // Progress tracking (숨겨진 업종 섹션 제외)
+  let LANG = 'ko';
+
+  // ── i18n 적용 ──────────────────────────────
+  function captureOriginals() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (el.dataset.ko === undefined) el.dataset.ko = el.textContent;
+    });
+    document.querySelectorAll('[data-i18nh]').forEach(el => {
+      if (el.dataset.koh === undefined) el.dataset.koh = el.innerHTML;
+    });
+    document.querySelectorAll('[data-ph]').forEach(el => {
+      if (el.dataset.phko === undefined) el.dataset.phko = el.getAttribute('placeholder') || '';
+    });
+  }
+
+  function setLang(lang) {
+    LANG = lang;
+    const dict = (window.I18N && window.I18N[lang]) || {};
+    const isIntl = (lang !== 'ko');
+
+    document.documentElement.lang = (lang === 'fil') ? 'fil' : (lang === 'en' ? 'en' : 'ko');
+    document.documentElement.classList.toggle('intl', isIntl);
+
+    // 텍스트
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      el.textContent = (lang === 'ko') ? el.dataset.ko : (dict[k] !== undefined ? dict[k] : el.dataset.ko);
+    });
+    // HTML 텍스트(굵게/줄바꿈 포함)
+    document.querySelectorAll('[data-i18nh]').forEach(el => {
+      const k = el.getAttribute('data-i18nh');
+      el.innerHTML = (lang === 'ko') ? el.dataset.koh : (dict[k] !== undefined ? dict[k] : el.dataset.koh);
+    });
+    // placeholder
+    document.querySelectorAll('[data-ph]').forEach(el => {
+      const k = el.getAttribute('data-ph');
+      const v = (lang === 'ko') ? el.dataset.phko : (dict[k] !== undefined ? dict[k] : el.dataset.phko);
+      el.setAttribute('placeholder', v);
+    });
+
+    // 주소 입력 동작: 한국=주소검색(읽기전용), 해외=직접입력
+    const addr = document.getElementById('addressMain');
+    if (addr) {
+      if (isIntl) { addr.removeAttribute('readonly'); }
+      else { addr.setAttribute('readonly', 'readonly'); }
+    }
+
+    // 언어 버튼 활성화
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+
+    try { localStorage.setItem('checklist_lang', lang); } catch(e){}
+    updateProgress();
+  }
+
+  // ── 다국어 메시지 ──────────────────────────
+  const MSG = {
+    need_bizname: { ko:'⚠️ 상호명을 입력해주세요', en:'⚠️ Please enter your business name', fil:'⚠️ Pakilagay ang pangalan ng negosyo' },
+    need_biztype: { ko:'⚠️ 업종 대분류를 선택해주세요', en:'⚠️ Please select your business category', fil:'⚠️ Pumili ng kategorya ng negosyo' },
+    need_address: { ko:'⚠️ 사업장 주소를 입력해주세요', en:'⚠️ Please enter your business address', fil:'⚠️ Pakilagay ang address ng negosyo' },
+    need_phone:   { ko:'⚠️ 대표 전화번호를 입력해주세요', en:'⚠️ Please enter your phone number', fil:'⚠️ Pakilagay ang numero ng telepono' },
+    need_pw8:     { ko:'⚠️ 비밀번호는 8자 이상이어야 합니다', en:'⚠️ Password must be at least 8 characters', fil:'⚠️ Dapat 8 karakter o higit pa ang password' },
+    need_agree:   { ko:'⚠️ 개인정보 수집 및 이용에 동의해주세요', en:'⚠️ Please agree to the privacy policy', fil:'⚠️ Pakisang-ayon sa privacy policy' },
+    no_url:       { ko:'⚠️ Apps Script URL이 설정되지 않았습니다', en:'⚠️ Submission URL is not configured', fil:'⚠️ Hindi naka-set ang submission URL' },
+    fail:         { ko:'⚠️ 전송 실패. 다시 시도해주세요.', en:'⚠️ Submission failed. Please try again.', fil:'⚠️ Hindi naipasa. Pakisubukan muli.' },
+    saved:        { ko:'✅ 임시 저장되었습니다!', en:'✅ Draft saved!', fil:'✅ Na-save ang draft!' },
+    cleared:      { ko:'🗑️ 초기화되었습니다', en:'🗑️ Form cleared', fil:'🗑️ Na-clear ang form' },
+    confirm_clear:{ ko:'모든 입력 내용을 삭제하시겠습니까?', en:'Delete all entered content?', fil:'Burahin lahat ng nilagay?' },
+    addr_loading: { ko:'⚠️ 주소 검색 로딩 중입니다. 잠시 후 다시 시도해주세요', en:'⚠️ Address search is loading. Please try again shortly', fil:'⚠️ Naglo-load pa ang address search. Subukan muli mamaya' }
+  };
+  function msg(k){ const m = MSG[k] || {}; return m[LANG] || m.ko || ''; }
+
+  // Progress tracking (숨겨진 업종/로케일 섹션 제외)
   function updateProgress() {
+    const isIntl = (LANG !== 'ko');
     const all = Array.from(document.querySelectorAll('[data-track]')).filter(el => {
-      const hidden = el.closest('.biz-only:not(.active)');
-      return !hidden;
+      if (el.closest('.biz-only:not(.active)')) return false;
+      if (isIntl && el.closest('.ko-only')) return false;
+      if (!isIntl && el.closest('.intl-only')) return false;
+      return true;
     });
     let filled = 0;
     all.forEach(el => {
@@ -1505,19 +1743,17 @@
     el.addEventListener('input', () => el.classList.remove('error'));
   });
 
-  // 비밀번호 보기 토글
   function togglePassword() {
     const input = document.getElementById('adminPassword');
     input.type = input.type === 'password' ? 'text' : 'password';
   }
 
-  // 도메인 필드 조건부 노출
   function toggleDomainField() {
     const has = document.querySelector('input[name="domain_status"]:checked')?.value === '있음';
     document.getElementById('domainField').style.display = has ? '' : 'none';
   }
 
-  // 전화번호 자동 하이픈
+  // 전화번호 자동 하이픈 (한국어일 때만)
   function formatPhone(value) {
     const digits = value.replace(/\D/g, '').slice(0, 11);
     if (digits.startsWith('02')) {
@@ -1541,15 +1777,15 @@
 
   ['phone', 'mobile'].forEach(n => {
     const el = document.querySelector(`[name="${n}"]`);
-    if (el) el.addEventListener('input', () => { el.value = formatPhone(el.value); });
+    if (el) el.addEventListener('input', () => { if (LANG === 'ko') el.value = formatPhone(el.value); });
   });
   const bizEl = document.querySelector('[name="biz_number"]');
-  if (bizEl) bizEl.addEventListener('input', () => { bizEl.value = formatBizNumber(bizEl.value); });
+  if (bizEl) bizEl.addEventListener('input', () => { if (LANG === 'ko') bizEl.value = formatBizNumber(bizEl.value); });
 
-  // Daum 우편번호
+  // Daum 우편번호 (한국 전용)
   function searchAddress() {
     if (typeof daum === 'undefined' || !daum.Postcode) {
-      showToast('⚠️ 주소 검색 로딩 중입니다. 잠시 후 다시 시도해주세요');
+      showToast(msg('addr_loading'));
       return;
     }
     new daum.Postcode({
@@ -1562,15 +1798,13 @@
     }).open();
   }
 
-  // Section toggle
   function toggleSection(header) {
     header.parentElement.classList.toggle('collapsed');
   }
 
-  // Toast
-  function showToast(msg) {
+  function showToast(msgText) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
+    t.textContent = msgText;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2500);
   }
@@ -1605,40 +1839,35 @@
         el.classList.remove('collapsed');
       }
     }
+    updateProgress();
   }
 
-  // 체크그룹에서 선택된 항목 텍스트 추출
   function getCheckedLabels(groupName) {
     const group = document.querySelector(`[data-group="${groupName}"]`);
     if (!group) return '';
     const labels = [];
     group.querySelectorAll('input:checked').forEach(cb => {
       const lbl = group.querySelector(`label[for="${cb.id}"]`);
-      if (lbl) labels.push(lbl.textContent.trim());
+      if (lbl) labels.push((lbl.dataset.ko || lbl.textContent).trim());
     });
     return labels.join(', ');
   }
 
-  // 폼 데이터 수집
   function collectData() {
     const data = {};
 
-    // 텍스트 필드
-    document.querySelectorAll('input[type="text"], input[type="tel"], input[type="url"], input[type="password"], input[type="time"], textarea').forEach(el => {
+    document.querySelectorAll('input[type="text"], input[type="tel"], input[type="url"], input[type="email"], input[type="password"], input[type="time"], textarea').forEach(el => {
       if (el.name) data[el.name] = el.value.trim();
     });
 
-    // 라디오 버튼
     document.querySelectorAll('input[type="radio"]:checked').forEach(el => {
       if (el.name) data[el.name] = el.value;
     });
 
-    // 주소 합치기 (메인 + 상세)
     const addrMain = document.querySelector('[name="address"]')?.value.trim() || '';
     const addrDetail = document.querySelector('[name="address_detail"]')?.value.trim() || '';
     data.address = addrDetail ? `${addrMain}, ${addrDetail}` : addrMain;
 
-    // 체크그룹 데이터
     data['업종'] = document.querySelector('input[name="biz_type"]:checked')?.value || '';
     data['보유이미지'] = getCheckedLabels('보유이미지');
     data['강점키워드'] = getCheckedLabels('강점키워드');
@@ -1647,7 +1876,6 @@
     data['페이지구성'] = getCheckedLabels('페이지구성');
     data['다국어'] = getCheckedLabels('다국어');
 
-    // 추가 필드
     data['선호연락방법'] = document.querySelector('input[name="contact_pref"]:checked')?.value || '';
     data['연락가능시간'] = document.querySelector('[name="contact_time"]')?.value || '';
     data['기존홈페이지여부'] = document.querySelector('input[name="has_existing_site"]:checked')?.value || '';
@@ -1658,10 +1886,12 @@
     data['경쟁업체'] = document.querySelector('[name="competitors"]')?.value || '';
     data['참고영상'] = document.querySelector('[name="reference_video"]')?.value || '';
 
+    // 작성 언어 (관리자가 어떤 언어로 접수됐는지 확인)
+    data['lang'] = (LANG === 'ko') ? '한국어' : (LANG === 'fil' ? 'Filipino' : 'English');
+
     return data;
   }
 
-  // 필수 필드 하이라이트 헬퍼
   function markError(name) {
     const el = document.querySelector(`[name="${name}"]`);
     if (el) {
@@ -1671,7 +1901,6 @@
     }
   }
 
-  // 제출
   async function submitForm() {
     document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
 
@@ -1680,40 +1909,36 @@
     const addressEl = document.querySelector('[name="address"]');
     const phoneEl = document.querySelector('[name="phone"]');
 
-    if (!bizNameEl.value.trim()) { markError('biz_name_kr'); showToast('⚠️ 상호명을 입력해주세요'); return; }
-    if (!bizType) { showToast('⚠️ 업종 대분류를 선택해주세요'); document.querySelector('#biz1').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-    if (!addressEl.value.trim()) { markError('address'); showToast('⚠️ 사업장 주소를 검색해주세요'); return; }
-    if (!phoneEl.value.trim()) { markError('phone'); showToast('⚠️ 대표 전화번호를 입력해주세요'); return; }
+    if (!bizNameEl.value.trim()) { markError('biz_name_kr'); showToast(msg('need_bizname')); return; }
+    if (!bizType) { showToast(msg('need_biztype')); document.querySelector('#biz1').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    if (!addressEl.value.trim()) { markError('address'); showToast(msg('need_address')); return; }
+    if (!phoneEl.value.trim()) { markError('phone'); showToast(msg('need_phone')); return; }
 
-    // 비밀번호 8자 이상 검증
     const pwEl = document.querySelector('[name="admin_password"]');
     if (pwEl.value && pwEl.value.length < 8) {
       markError('admin_password');
-      showToast('⚠️ 비밀번호는 8자 이상이어야 합니다');
+      showToast(msg('need_pw8'));
       return;
     }
 
-    // 개인정보 동의 체크
     const agreeEl = document.getElementById('privacyAgree');
     if (!agreeEl.checked) {
       agreeEl.closest('.section').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      showToast('⚠️ 개인정보 수집 및 이용에 동의해주세요');
+      showToast(msg('need_agree'));
       return;
     }
 
-    if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-      showToast('⚠️ Apps Script URL이 설정되지 않았습니다');
+    if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      showToast(msg('no_url'));
       return;
     }
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    const loadingEl = document.getElementById('loading');
-    loadingEl.classList.add('show');
+    document.getElementById('loading').classList.add('show');
 
     try {
       const data = collectData();
-
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -1725,21 +1950,22 @@
       document.getElementById('formContainer').style.display = 'none';
       document.getElementById('successScreen').classList.add('show');
       localStorage.removeItem('checklist_data');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
       document.getElementById('loading').classList.remove('show');
       btn.disabled = false;
-      showToast('⚠️ 전송 실패. 다시 시도해주세요.');
+      showToast(msg('fail'));
       console.error(err);
     }
   }
 
-  // Save to localStorage
   function saveData(silent) {
     const data = {};
     document.querySelectorAll('input, textarea, select').forEach(el => {
       const key = el.name || el.id;
       if (!key) return;
+      if (el.type === 'password') return; // 비밀번호는 로컬에 저장하지 않음
       if (el.type === 'checkbox' || el.type === 'radio') {
         data[key] = el.checked;
       } else {
@@ -1747,10 +1973,9 @@
       }
     });
     localStorage.setItem('checklist_data', JSON.stringify(data));
-    if (!silent) showToast('✅ 임시 저장되었습니다!');
+    if (!silent) showToast(msg('saved'));
   }
 
-  // Load from localStorage
   function loadData() {
     const raw = localStorage.getItem('checklist_data');
     if (!raw) return;
@@ -1764,12 +1989,10 @@
         el.value = val;
       }
     });
-    updateProgress();
   }
 
-  // Clear all
   function clearAll() {
-    if (!confirm('모든 입력 내용을 삭제하시겠습니까?')) return;
+    if (!confirm(msg('confirm_clear'))) return;
     document.querySelectorAll('input, textarea').forEach(el => {
       if (el.type === 'checkbox' || el.type === 'radio') {
         el.checked = false;
@@ -1781,17 +2004,32 @@
     document.getElementById('pg2').checked = true;
     document.getElementById('pg3').checked = true;
     localStorage.removeItem('checklist_data');
+    handleBizTypeChange();
     updateProgress();
-    showToast('🗑️ 초기화되었습니다');
+    showToast(msg('cleared'));
   }
 
-  // Auto-save every 30 seconds (silent)
   setInterval(() => saveData(true), 30000);
 
-  // Init
+  // ── Init ──────────────────────────────────
+  function detectLang() {
+    // 1) URL ?lang=  2) 저장값  3) 브라우저 언어  4) 기본 ko
+    const url = new URLSearchParams(location.search).get('lang');
+    if (url && ['ko','en','fil'].includes(url)) return url;
+    let saved;
+    try { saved = localStorage.getItem('checklist_lang'); } catch(e){}
+    if (saved && ['ko','en','fil'].includes(saved)) return saved;
+    const nav = (navigator.language || 'ko').toLowerCase();
+    if (nav.startsWith('ko')) return 'ko';
+    if (nav.startsWith('fil') || nav.startsWith('tl')) return 'fil';
+    return 'en';
+  }
+
+  captureOriginals();
   loadData();
   handleBizTypeChange();
   toggleDomainField();
+  setLang(detectLang());
   updateProgress();
 </script>
 
